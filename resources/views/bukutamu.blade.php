@@ -5,11 +5,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Buku Tamu Elektronik</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+    </style>
 
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -21,7 +30,7 @@
 
                 :root,
                 :host {
-                    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                    --font-sans: "Google Sans Flex";
                     --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
                     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
                     --color-red-50: oklch(.971 .013 17.38);
@@ -1520,9 +1529,33 @@
 </head>
 
 <body class="min-h-screen bg-white text-gray-900">
-    <main class="min-h-screen w-full grid grid-cols-2">
-        <section class="bg-blue-600">adrian</section>
-        <section class="bg-white">tegar</section>
+    <main class="min-h-screen w-full grid lg:grid-cols-2">
+        <section
+            class="bg-linear-to-t from-gray-200 to-white flex flex-col items-start justify-center gap-8 p-2 sm:p-4 md:p-15 lg:p-20 border-r border-gray-200">
+            <div class="flex items-center justify-center">
+                <div class="flex justify-center items-center gap-4 p-2 px-4">
+                    <img src="{{ asset("icons/Logo.svg") }}" alt="Logo Image" class="w-18 md:w-25 h-18 md:h-25" />
+                    <div class="flex flex-col">
+                        <h2 class="text-2xl md:text-4xl font-semibold">Dinas Arpus</h2>
+                        <h3 class="text-xl md:text-2xl font-medium text-gray-800">Provinsi Jawa tengah</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="h-1.5 w-18 md:h-2 md:w-24 bg-yellow-300 ml-6 rounded"></div>
+            <h1 class="text-3xl md:text-4xl ml-6 font-bold uppercase">Panel Buku Tamu</h1>
+            <p class="text-md md:text-2xl ml-6">Selamat Datang di Dinas Kearsipan dan Perpustakaan
+                Provinsi Jawa
+                Tengah. Mohon
+                mengisi
+                Buku Tamu
+                Elektronik kami.</p>
+            <button class=" bg-linear-to-t from-yellow-400 to-yellow-300 p-2 px-4 md:p-4 md:px-8 text-xl md:text-3xl ml-6 rounded-md
+                font-medium border border-yellow-500 cursor-pointer active:scale-105 hover:scale-105 duration-300 transition-all
+                ease-in-out shadow-md">Mulai</button>
+        </section>
+        <section class="hidden lg:block w-full bg-slate-100 p-8">
+            <img src="{{ asset('images/Banner.png') }}" alt="Logo Image" class="w-full h-full rounded-xl" />
+        </section>
     </main>
 </body>
 
