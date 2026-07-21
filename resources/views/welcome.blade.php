@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Laravel</title>
+    <title>Buku Tamu Elektronik</title>
 
     <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <!-- Styles / Scripts -->
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -21,7 +22,7 @@
 
                 :root,
                 :host {
-                    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                    --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
                     --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
                     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
                     --color-red-50: oklch(.971 .013 17.38);
@@ -1520,9 +1521,49 @@
 </head>
 
 <body class="min-h-screen bg-white text-gray-900">
-    <main class="min-h-screen w-full grid grid-cols-2">
-        <section class="bg-blue-600">adrian</section>
-        <section class="bg-white">tegar</section>
+    <main class="min-h-screen w-full flex flex-row overflow-hidden">
+
+        <section class="flex-1 bg-white flex flex-col justify-center px-16">
+
+            {{-- Logo (sudah nyatu dengan tulisan) --}}
+            <div class="mb-8">
+                <img src="{{ asset('images/logo-arpus.webp') }}" alt="Logo Dinas Arpus Provinsi Jawa Tengah"
+                    class="h-16 w-auto object-contain">
+            </div>
+
+            {{-- Garis kuning kecil --}}
+            <div class="w-24 h-1.5 bg-yellow-400 rounded-full mb-2"></div>
+
+            {{-- Judul --}}
+            <h1 class="text-[clamp(1.5rem,4vw,2.25rem)] font-bold text-[#1E3A5F] mb-9 leading-tight">
+                PANEL BUKU TAMU
+            </h1>
+
+            {{-- Deskripsi --}}
+            <p class="text-slate-600 text-[clamp(0.95rem,1.8vw,1.125rem)] leading-snug mb-10 max-w-md">
+                Selamat Datang di Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah.
+                Mohon mengisi Buku Tamu Elektronik kami.
+            </p>
+            {{-- Tombol Mulai --}}
+            <a href="{{ route('buku-tamu.form') }}" class="inline-block w-fit bg-yellow-400 hover:bg-yellow-500 transition-colors
+          text-[#1E3A5F] font-bold text-[clamp(0.875rem,1.8vw,1.125rem)]
+          px-[clamp(1.25rem,4vw,2rem)] py-[clamp(0.5rem,1.5vw,0.75rem)]
+          rounded-sm shadow-md text-center">
+                Mulai
+            </a>
+
+        </section>
+
+       <section class="w-0 opacity-0 md:w-1/2 md:opacity-100
+                 relative overflow-hidden shrink-0
+                 rounded-tl-[4rem] md:rounded-tl-[6rem]
+                 bg-white
+                 transition-all duration-700 ease-in-out">
+            <img src="{{ asset('images/gedung-arpus.PNG') }}"
+                alt="Gedung Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah"
+                class="absolute inset-0 w-full h-full object-cover">
+        </section>
+
     </main>
 </body>
 
