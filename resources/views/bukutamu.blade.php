@@ -1553,8 +1553,9 @@
                 font-medium border border-yellow-500 cursor-pointer active:scale-105 hover:scale-105 duration-300 transition-all
                 ease-in-out shadow-md">Mulai</button>
         </section>
-        <section class="hidden lg:block w-full bg-slate-100 p-8">
-            <img src="{{ asset('images/Banner.png') }}" alt="Logo Image" class="w-full h-full rounded-xl" />
+        <section class="max-h-screen hidden lg:block w-full bg-slate-100 p-8">
+            <img src="{{ asset('images/Banner.png') }}" alt="Logo Image"
+                class="w-full h-full rounded-xl object-cover border border-gray-600" />
         </section>
     </main>
 </body>
