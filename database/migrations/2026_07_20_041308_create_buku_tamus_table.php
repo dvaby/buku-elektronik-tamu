@@ -12,8 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('buku_tamus', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        $table->id();
+        $table->string('identitas');
+        $table->string('no_hp')->nullable();
+        $table->string('instansi_alamat');
+        $table->string('keperluan');
+        $table->string('nama');
+        $table->string('pegawai_temui')->nullable();
+        $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
+        $table->enum('anda_sendirian', ['Hanya saya', 'Rombongan'])->default('Hanya saya');
+        $table->integer('jumlah_rombongan')->nullable();
+        $table->integer('usia');
+        $table->timestamps();
         });
     }
 
