@@ -7,13 +7,16 @@
 
     <title>Buku Tamu Elektronik</title>
 
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/virtual-keyboard/1.26.25/css/keyboard.min.css" />
+
     <style>
         body {
             font-family: "Google Sans Flex", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -1524,50 +1527,610 @@
                 inherits: false;
                 initial-value: ""
             }
+
+            /* 1. Backdrop Gelap / Overlay Transparan */
+            .keyboard-backdrop {
+                display: none;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                background-color: rgba(15, 23, 42, 0.6) !important;
+                /* Slate 900 transparan */
+                backdrop-filter: blur(4px);
+                /* Efek blur halus di belakang keyboard */
+                z-index: 99998 !important;
+            }
+
+            /* 2. Container Keyboard Pop-Up (Width 100%, Height 50vh) */
+            div.ui-keyboard {
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: auto !important;
+                width: 100vw !important;
+                height: 50vh !important;
+                /* Setengah tinggi layar */
+                max-width: 100% !important;
+                margin: 0 !important;
+                z-index: 99999 !important;
+                background-color: #0f172a !important;
+                /* Dark Slate */
+                border-top: 4px solid #3b82f6 !important;
+                border-radius: 20px 20px 0 0 !important;
+                padding: 16px !important;
+                box-sizing: border-box !important;
+
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5) !important;
+
+                /* Animasi Slide Up */
+                animation: slideUp 0.25s ease-out forwards;
+            }
+
+            @keyframes slideUp {
+                from {
+                    transform: translateY(100%);
+                }
+
+                to {
+                    transform: translateY(0);
+                }
+            }
         </style>
     @endif
 </head>
 
-<body class="min-h-screen bg-white text-gray-900">
-    <main class="min-h-screen w-full grid lg:grid-cols-2">
-        <section
-            class="bg-linear-to-t from-gray-200 to-white flex flex-col items-start justify-center gap-8 p-2 sm:p-4 md:p-15 lg:p-20 border-r border-gray-200">
+<body class="min-h-screen bg-white text-gray-800 flex flex-col justify-between">
+    <!-- NAVBAR / MARQUEE -->
+    <nav
+        class="bg-linear-to-t from-yellow-400 to-yellow-300 relative top-0 left-0 w-full py-2.5 lg:py-4 border-b border-gray-300 z-50">
+        <marquee class="bg-linear-to-t from-yellow-400 to-yellow-300 w-full flex justify-center items-center">
+            <h2 class="text-base sm:text-lg lg:text-3xl text-red-600 uppercase font-bold tracking-wide">
+                Selamat Datang di Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah. Data Anda akan kami jaga
+                kerahasiaannya.
+            </h2>
+        </marquee>
+    </nav>
 
-            <div class="flex items-center justify-center animate-fade-in">
-                <div class="flex justify-center items-center gap-4 p-2 px-4">
-                    <img src="{{ asset("icons/Logo.svg") }}" alt="Logo Image"
-                        class="w-18 md:w-25 h-18 md:h-25 animate-[fadeIn_0.6s_ease-in-out]" />
-                    <div class="flex flex-col">
-                        <h2 class="text-2xl md:text-4xl font-semibold">Dinas Arpus</h2>
-                        <h3 class="text-xl md:text-2xl font-medium text-gray-800">Provinsi Jawa tengah</h3>
-                    </div>
-                </div>
-            </div>
-
-            <div
-                class="h-1.5 w-18 md:h-2 md:w-24 bg-yellow-300 ml-6 rounded animate-slide-in-left [animation-delay:0.6s]">
-            </div>
-
-            <h1 class="text-3xl md:text-4xl ml-6 font-bold uppercase animate-slide-in-left [animation-delay:0.6s]">
-                Panel Buku Tamu
-            </h1>
-
-            <p class="text-md md:text-2xl ml-6 animate-slide-in-left [animation-delay:0.6s]">
-                Selamat Datang di Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah. Mohon mengisi Buku Tamu
-                Elektronik kami.
-            </p>
-
-            <button
-                class="bg-linear-to-t from-yellow-400 to-yellow-300 text-yellow-900 p-2 px-4 md:p-4 md:px-8 text-xl md:text-3xl ml-6 rounded-md font-extrabold border-[1.5px] border-yellow-500 shadow-[0_2.5px_0_#ca8a04] hover:bg-yellow-400 cursor-pointer active:scale-98 hover:scale-105 duration-200 transition-all ease-in-out animate-slide-in-bottom">
-                Mulai
-            </button>
+    <!-- MAIN CONTAINER -->
+    <main class="flex-1 w-full flex flex-col lg:flex-row">
+        <!-- BANNER GAMBAR (Hanya tampil di Desktop / lg) -->
+        <section class="hidden lg:block h-screen w-[35vw] sticky top-0">
+            <img src="{{ asset('images/Form.png') }}" alt="Logo Image" class="w-full h-full object-cover" />
         </section>
 
-        <section class="max-h-screen hidden lg:block w-full bg-slate-100 p-8 animate-fade-in">
-            <img src="{{ asset('images/Banner.png') }}" alt="Logo Image"
-                class="w-full h-full rounded-xl object-cover border border-gray-600" />
+        <!-- FORM CONTAINER -->
+        <section class="flex-1 w-full flex justify-center items-center p-3 sm:p-6 lg:p-8">
+            <div
+                class="bg-linear-to-t from-gray-100 to-white w-full max-w-5xl rounded-xl border border-gray-300 shadow-md overflow-hidden flex flex-col lg:max-h-screen">
+
+                <!-- HEADER FORM -->
+                <div
+                    class="bg-linear-to-t from-gray-100 to-white flex items-center justify-center p-3.5 sm:p-4 border-b border-gray-200 shrink-0">
+                    <h1
+                        class="text-lg sm:text-xl lg:text-2xl font-bold uppercase tracking-wide text-gray-800 text-center">
+                        Buku Tamu Elektronik
+                    </h1>
+                </div>
+
+                <!-- FORM BODY -->
+                <form action="" method="POST" x-data="{ status: '' }"
+                    class="lg:overflow-y-auto p-4 sm:p-6 pb-12 lg:pb-8 flex-1 flex flex-col justify-between">
+                    @csrf
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+
+                        <!-- KOLOM KIRI -->
+                        <div class="flex flex-col text-base sm:text-lg">
+                            <label class="font-medium mt-1 sm:mt-2">
+                                IDENTITAS <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib
+                                        Diisi)</i></span>
+                            </label>
+                            <input type="text" name="identitas" required
+                                class="use-keyboard-text bg-slate-100 border border-gray-300 rounded-lg p-2.5 px-3.5 sm:px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                                placeholder="NIK / SIM / Kartu Pelajar" />
+
+                            <label class="font-medium mt-3 sm:mt-4">
+                                INSTANSI / ALAMAT <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib
+                                        Diisi)</i></span>
+                            </label>
+                            <input type="text" name="instansi_alamat" required
+                                class="use-keyboard-text bg-slate-100 border border-gray-300 rounded-lg p-2.5 px-3.5 sm:px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                                placeholder="Instansi anda bekerja / Alamat anda" />
+
+                            <label class="font-medium mt-3 sm:mt-4">
+                                NAMA <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib
+                                        Diisi)</i></span>
+                            </label>
+                            <input type="text" name="nama" required
+                                class="use-keyboard-text bg-slate-100 border border-gray-300 rounded-lg p-2.5 px-3.5 sm:px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                                placeholder="Nama Lengkap Anda" />
+
+                            <label class="font-medium mt-3 sm:mt-4">
+                                JENIS KELAMIN <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib
+                                        Diisi)</i></span>
+                            </label>
+                            <div class="flex gap-4 sm:gap-6 mt-2">
+                                <label class="flex items-center gap-2 cursor-pointer text-base sm:text-lg">
+                                    <input type="radio" value="L" name="jenis_kelamin" required
+                                        class="w-4 h-4 text-blue-600" />
+                                    <span>Laki-laki</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer text-base sm:text-lg">
+                                    <input type="radio" value="P" name="jenis_kelamin" required
+                                        class="w-4 h-4 text-blue-600" />
+                                    <span>Perempuan</span>
+                                </label>
+                            </div>
+
+                            <label class="font-medium mt-3 sm:mt-4">
+                                USIA <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib
+                                        Diisi)</i></span>
+                            </label>
+                            <input type="text" inputmode="none" name="usia" required
+                                class="use-keyboard-number bg-slate-100 border border-gray-300 rounded-lg p-2.5 px-3.5 sm:px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                                placeholder="Usia Anda" />
+                        </div>
+
+                        <!-- KOLOM KANAN -->
+                        <div class="flex flex-col text-base sm:text-lg">
+
+                            <label class="font-medium mt-1 sm:mt-2">
+                                NOMOR HP <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Data Dijaga
+                                        Kerahasiaannya)</i></span>
+                            </label>
+                            <input type="text" inputmode="none" name="nomor_hp" required
+                                class="use-keyboard-number bg-slate-100 border border-gray-300 rounded-lg p-2.5 px-3.5 sm:px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                                placeholder="Nomor Whatsapp / HP" />
+
+                            <label class="font-medium mt-3 sm:mt-4">
+                                KEPERLUAN <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib
+                                        Diisi)</i></span>
+                            </label>
+                            <select name="keperluan" id="keperluan" required
+                                class="font-normal p-2.5 px-3.5 sm:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1 w-full bg-slate-100 text-base">
+                                <option value="" disabled selected>-- Pilih Keperluan --</option>
+                                <option value="Penelitian atau Mencari Arsip">Penelitian atau Mencari Arsip</option>
+                                <option value="Kunjungan atau Wisata Arsip">Kunjungan atau Wisata Arsip</option>
+                                <option value="Magang atau PKL">Magang atau PKL</option>
+                                <option value="Konsultasi Kearsipan atau Perpustakaan">Konsultasi Kearsipan atau
+                                    Perpustakaan</option>
+                                <option value="Umum atau Lain-lain">Umum atau Lain-lain</option>
+                            </select>
+
+                            <label class="font-medium mt-3 sm:mt-4">PEGAWAI YANG INGIN DITEMUI ?</label>
+                            <input type="text" name="pegawai_tujuan"
+                                class="use-keyboard-text bg-slate-100 border border-gray-300 rounded-lg p-2.5 px-3.5 sm:px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                                placeholder="Opsional (Boleh kosong)" />
+
+                            <label class="font-medium mt-3 sm:mt-4">
+                                ANDA SENDIRIAN ? <span class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib
+                                        Diisi)</i></span>
+                            </label>
+                            <select name="status_rombongan" id="status_rombongan" x-model="status" required
+                                class="font-normal p-2.5 px-3.5 sm:px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1 w-full bg-slate-100 text-base">
+                                <option value="" disabled selected>-- Pilih Status --</option>
+                                <option value="Hanya Saya">Hanya Saya</option>
+                                <option value="Rombongan">Rombongan (Lebih dari 1 orang)</option>
+                            </select>
+
+                            <div x-show="status === 'Rombongan'" x-cloak class="flex flex-col mt-3 sm:mt-4">
+                                <label class="font-medium">
+                                    SEBUTKAN JUMLAHNYA ? (Orang) <span
+                                        class="font-medium text-xs sm:text-sm text-red-600"><i>(Wajib diisi)</i></span>
+                                </label>
+                                <input type="text" inputmode="none" name="jumlah_orang"
+                                    :required="status === 'Rombongan'"
+                                    class="use-keyboard-number bg-slate-100 border border-gray-300 rounded-lg p-2.5 px-3.5 sm:px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 mt-1"
+                                    placeholder="Contoh: 5" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full mt-6 sm:mt-8 p-3.5 sm:p-4 text-xl sm:text-2xl bg-linear-to-t from-yellow-400 to-yellow-300 text-yellow-900 border-[1.5px] border-yellow-500 shadow-[0_2.5px_0_#ca8a04] hover:bg-yellow-400 font-extrabold rounded-lg cursor-pointer active:scale-98 hover:scale-101 duration-200 transition-all ease-in-out">
+                        Simpan & Kirim
+                    </button>
+                </form>
+
+            </div>
         </section>
     </main>
+
+    <!-- FOOTER -->
+    <footer
+        class="bg-white relative bottom-0 w-full p-3 sm:p-4 border-t border-gray-300 text-sm sm:text-base lg:text-xl">
+        <div class="w-full flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-0">
+            <h1 class="uppercase font-bold text-center sm:text-left">© 2026 <a href="https://arpusda.jatengprov.go.id/"
+                    class="text-blue-600 hover:underline">Dinas Arpus Jateng.</a> All rights reserved.</h1>
+            <h1 class="uppercase font-bold">Version 3.0©</h1>
+        </div>
+    </footer>
+
+    <!-- CDN Simple-Keyboard -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.modern.js"></script>
+
+    <!-- CSS Styling Keyboard -->
+    <style>
+        input.keyboard-active {
+            caret-color: #2563eb !important;
+        }
+
+        .keyboard-backdrop {
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 99998;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .keyboard-backdrop.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .keyboard-wrapper {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100vw;
+            background-color: #f1f5f9;
+            border-top: 1px solid #e2e8f0;
+            padding: 8px 6px 12px 6px;
+            box-sizing: border-box;
+            box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.15);
+            z-index: 99999;
+            transform: translateY(100%);
+            visibility: hidden;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.3s;
+        }
+
+        @media (min-width: 640px) {
+            .keyboard-wrapper {
+                padding: 10px 12px 14px 12px;
+            }
+        }
+
+        .keyboard-wrapper.show {
+            transform: translateY(0);
+            visibility: visible;
+        }
+
+        .simple-keyboard {
+            max-width: 100% !important;
+            background: transparent !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .simple-keyboard-number {
+            max-width: 480px !important;
+            margin: 0 auto !important;
+            background: transparent !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        .simple-keyboard .hg-button,
+        .simple-keyboard-number .hg-button {
+            position: relative !important;
+            overflow: hidden !important;
+            height: 48px !important;
+            border-radius: 8px !important;
+            background: #ffffff !important;
+            color: #1e293b !important;
+            font-size: 1.25rem !important;
+            font-weight: 700 !important;
+            border: 1.5px solid #cbd5e1 !important;
+            box-shadow: 0 2px 0 #94a3b8 !important;
+            margin: 3px !important;
+            transition: transform 0.08s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.08s ease, border-color 0.15s ease !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (min-width: 640px) {
+
+            .simple-keyboard .hg-button,
+            .simple-keyboard-number .hg-button {
+                height: 54px !important;
+                border-radius: 9px !important;
+                font-size: 1.45rem !important;
+                margin: 4px !important;
+                box-shadow: 0 2.5px 0 #94a3b8 !important;
+            }
+        }
+
+        .simple-keyboard .hg-button::after,
+        .simple-keyboard-number .hg-button::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(56, 189, 248, 0.45);
+            border-radius: 7px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease-out;
+        }
+
+        .simple-keyboard .hg-button:active,
+        .simple-keyboard-number .hg-button:active {
+            transform: scale(1.06) translateY(-2px) !important;
+            border-color: #38bdf8 !important;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.6) !important;
+            z-index: 10 !important;
+        }
+
+        .simple-keyboard .hg-button-bksp,
+        .simple-keyboard .hg-button-shift,
+        .simple-keyboard-number .hg-button-bksp {
+            background: #f8fafc !important;
+            color: #334155 !important;
+            flex: 1.4 !important;
+            border: 1.5px solid #cbd5e1 !important;
+        }
+
+        .simple-keyboard.shift-active .hg-button-shift {
+            background: #0284c7 !important;
+            color: #ffffff !important;
+            border-color: #0369a1 !important;
+            box-shadow: 0 2.5px 0 #0369a1 !important;
+        }
+
+        .simple-keyboard .hg-button-enter,
+        .simple-keyboard-number .hg-button-enter {
+            background: linear-gradient(to top, #facc15, #fde047) !important;
+            color: #713f12 !important;
+            flex: 2 !important;
+            font-weight: 800 !important;
+            border: 1.5px solid #eab308 !important;
+            box-shadow: 0 2.5px 0 #ca8a04 !important;
+        }
+
+        .simple-keyboard .hg-button-space {
+            flex: 4.5 !important;
+            font-size: 1rem !important;
+        }
+
+        @media (min-width: 640px) {
+            .simple-keyboard .hg-button-space {
+                font-size: 1.2rem !important;
+            }
+        }
+    </style>
+
+    <!-- CONTAINER KEYBOARD -->
+    <div id="keyboard-text-backdrop" class="keyboard-backdrop"></div>
+    <div id="keyboard-text-wrapper" class="keyboard-wrapper">
+        <div class="simple-keyboard"></div>
+    </div>
+
+    <div id="keyboard-number-backdrop" class="keyboard-backdrop"></div>
+    <div id="keyboard-number-wrapper" class="keyboard-wrapper">
+        <div class="simple-keyboard-number"></div>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const Keyboard = window.SimpleKeyboard.default;
+            let activeInput = null;
+
+            const formEl = document.querySelector('form');
+
+            // Cek apakah layar sedang di desktop / tablet besar (>= 1024px)
+            function isLargeScreen() {
+                return window.innerWidth >= 1024;
+            }
+
+            // Cek apakah input adalah 'usia' atau 'jumlah_orang'
+            function isTargetInput(inputEl) {
+                if (!inputEl) return false;
+                const name = inputEl.getAttribute('name');
+                return name === 'usia' || name === 'jumlah_orang';
+            }
+
+            // Scroll input target ke posisi yang aman
+            function scrollToInput(inputEl) {
+                setTimeout(() => {
+                    inputEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 150);
+            }
+
+            // --- 1. KEYBOARD TEKS ---
+            const textKeyboard = new Keyboard(".simple-keyboard", {
+                preventMouseDownDefault: true,
+                onChange: input => updateInputValue(input),
+                onKeyPress: button => {
+                    if (button === "{enter}") hideTextKeyboard();
+                    if (button === "{shift}" || button === "{lock}") handleShift();
+                    if (activeInput) activeInput.focus();
+                },
+                layout: {
+                    'default': [
+                        'q w e r t y u i o p',
+                        'a s d f g h j k l',
+                        '{shift} z x c v b n m {bksp}',
+                        '{space} {enter}'
+                    ],
+                    'shift': [
+                        'Q W E R T Y U I O P',
+                        'A S D F G H J K L',
+                        '{shift} Z X C V B N M {bksp}',
+                        '{space} {enter}'
+                    ]
+                },
+                display: {
+                    '{bksp}': '⌫',
+                    '{enter}': 'Selesai ✓',
+                    '{shift}': '⇧',
+                    '{space}': 'Spasi'
+                }
+            });
+
+            const textBackdrop = document.getElementById('keyboard-text-backdrop');
+            const textWrapper = document.getElementById('keyboard-text-wrapper');
+            const textKeyboardEl = document.querySelector('.simple-keyboard');
+
+            function showTextKeyboard(inputEl) {
+                hideNumberKeyboard();
+                activeInput = inputEl;
+                textKeyboard.setInput(inputEl.value);
+                activeInput.classList.add('keyboard-active');
+                activeInput.focus();
+
+                let valLen = inputEl.value.length;
+                inputEl.setSelectionRange(valLen, valLen);
+
+                textBackdrop.classList.add('show');
+                textWrapper.classList.add('show');
+
+                // Hanya eksekusi padding 350px & auto-scroll di desktop (>= lg) pada 2 input target
+                if (isLargeScreen() && isTargetInput(inputEl)) {
+                    if (formEl) formEl.style.paddingBottom = '350px';
+                    scrollToInput(inputEl);
+                }
+            }
+
+            function hideTextKeyboard() {
+                textBackdrop.classList.remove('show');
+                textWrapper.classList.remove('show');
+
+                if (formEl) formEl.style.paddingBottom = '';
+
+                if (activeInput) {
+                    activeInput.classList.remove('keyboard-active');
+                    activeInput.blur();
+                }
+                activeInput = null;
+            }
+
+            let isShift = false;
+            function handleShift() {
+                isShift = !isShift;
+                textKeyboard.setOptions({
+                    layoutName: isShift ? "shift" : "default"
+                });
+                textKeyboardEl.classList.toggle('shift-active', isShift);
+            }
+
+            document.querySelectorAll('.use-keyboard-text').forEach(input => {
+                input.addEventListener('focus', function () {
+                    showTextKeyboard(this);
+                });
+                input.addEventListener('keyup click', function () {
+                    if (activeInput === this) textKeyboard.setInput(this.value);
+                });
+            });
+
+            textBackdrop.addEventListener('click', hideTextKeyboard);
+
+
+            // --- 2. KEYBOARD NUMERIK ---
+            const numberKeyboard = new Keyboard(".simple-keyboard-number", {
+                preventMouseDownDefault: true,
+                onChange: input => updateInputValue(input),
+                onKeyPress: button => {
+                    if (button === "{enter}") hideNumberKeyboard();
+                    if (activeInput) activeInput.focus();
+                },
+                layout: {
+                    'default': [
+                        '1 2 3',
+                        '4 5 6',
+                        '7 8 9',
+                        '0 {bksp}',
+                        '{enter}'
+                    ]
+                },
+                display: {
+                    '{bksp}': '⌫ Hapus',
+                    '{enter}': 'Selesai ✓'
+                }
+            });
+
+            const numberBackdrop = document.getElementById('keyboard-number-backdrop');
+            const numberWrapper = document.getElementById('keyboard-number-wrapper');
+
+            function showNumberKeyboard(inputEl) {
+                hideTextKeyboard();
+                activeInput = inputEl;
+                numberKeyboard.setInput(inputEl.value);
+                activeInput.classList.add('keyboard-active');
+                activeInput.focus();
+
+                let valLen = inputEl.value.length;
+                inputEl.setSelectionRange(valLen, valLen);
+
+                numberBackdrop.classList.add('show');
+                numberWrapper.classList.add('show');
+
+                // Hanya eksekusi padding 350px & auto-scroll di desktop (>= lg) pada 2 input target
+                if (isLargeScreen() && isTargetInput(inputEl)) {
+                    if (formEl) formEl.style.paddingBottom = '350px';
+                    scrollToInput(inputEl);
+                }
+            }
+
+            function hideNumberKeyboard() {
+                numberBackdrop.classList.remove('show');
+                numberWrapper.classList.remove('show');
+
+                if (formEl) formEl.style.paddingBottom = '';
+
+                if (activeInput) {
+                    activeInput.classList.remove('keyboard-active');
+                    activeInput.blur();
+                }
+                activeInput = null;
+            }
+
+            document.querySelectorAll('.use-keyboard-number').forEach(input => {
+                input.addEventListener('focus', function () {
+                    showNumberKeyboard(this);
+                });
+                input.addEventListener('keyup click', function () {
+                    if (activeInput === this) numberKeyboard.setInput(this.value);
+                });
+            });
+
+            numberBackdrop.addEventListener('click', hideNumberKeyboard);
+
+
+            // --- HELPER CARET ---
+            function updateInputValue(input) {
+                if (activeInput) {
+                    let caretPos = activeInput.selectionStart;
+                    let oldLen = activeInput.value.length;
+
+                    activeInput.value = input;
+
+                    let newLen = input.length;
+                    let diff = newLen - oldLen;
+                    let newCaretPos = Math.max(0, caretPos + diff);
+
+                    activeInput.setSelectionRange(newCaretPos, newCaretPos);
+                    activeInput.dispatchEvent(new Event('input', { bubbles: true }));
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
