@@ -2,8 +2,9 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <title>Panel Buku Tamu - Dinas Arpus Jateng</title>
-    @vite('resources/css/app.css')
+    @vite(['resources/css/app.css', 'resources/js/page-transition.js'])
 </head>
 <body class="bg-gray-100">
 
@@ -18,7 +19,7 @@
 
 
         <!-- Card putih -->
-        <div class="order-2 relative z-10 bg-white w-full h-1/2 md:h-full md:w-[52%] md:absolute p-6 md:p-8 flex flex-col justify-center shadow-xl rounded-none md:rounded-4xl">
+        <div class="order-2 relative z-10 bg-white w-full h-1/2 md:h-full md:w-[52%] md:absolute p-6 md:p-8 flex flex-col justify-center shadow-xl rounded-none md:rounded-3xl">
 
             <!-- Logo & Header -->
             <div class="flex items-center gap-3 mb-4 md:mb-11">

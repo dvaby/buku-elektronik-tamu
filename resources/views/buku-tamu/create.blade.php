@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Buku Tamu Elektronik</title>
+    <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
+    <title>Panel Buku Tamu - Dinas Arpus Jateng</title>
     @vite(['resources/css/app.css', 'resources/js/keyboard.js', 'resources/js/page-transition.js'])
 </head>
 <body class="relative min-h-screen">
@@ -43,7 +44,7 @@
                         IDENTITAS <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <input type="text" name="identitas" required placeholder="Kartu Tanda Penduduk / SIM / Kartu Pelajar"
-                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
                 <!-- NOMOR HP -->
@@ -52,7 +53,7 @@
                         NOMOR HP <span class="font-normal italic text-gray-600">(Data akan kami jaga kerahasiaannya)</span>
                     </label>
                     <input type="text" name="no_hp" placeholder="Nomor yang bisa dihubungi"
-                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
                 <!-- INSTANSI / ALAMAT -->
@@ -61,7 +62,7 @@
                         INSTANSI / ALAMAT <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <input type="text" name="instansi_alamat" required placeholder="Instansi anda bekerja / Alamat anda"
-                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
                 <!-- KEPERLUAN -->
@@ -70,7 +71,7 @@
                         KEPERLUAN <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <select name="keperluan" required
-                            class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         <option value="">-- Pilih --</option>
                         {{-- GANTI DAFTAR INI SESUAI KEBUTUHAN KAMU --}}
                         <option value="Penelitian atau Mencari Arsip">Penelitian atau Mencari Arsip</option>
@@ -87,7 +88,7 @@
                         NAMA <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <input type="text" name="nama" required placeholder="Nama Lengkap Anda"
-                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
                 <!-- PEGAWAI YANG INGIN DITEMUI -->
@@ -96,7 +97,7 @@
                         PEGAWAI YANG INGIN ANDA TEMUI ?
                     </label>
                     <input type="text" name="pegawai_temui" placeholder="Boleh tidak diisi"
-                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
                 <!-- JENIS KELAMIN -->
@@ -122,7 +123,7 @@
                         ANDA SENDIRIAN ? <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <select name="anda_sendirian" id="anda_sendirian" required
-                            class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                            class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         <option value="Hanya saya">Hanya saya</option>
                         <option value="Rombongan">Rombongan ( Lebih dari 1 orang )</option>
                     </select>
@@ -134,7 +135,7 @@
                         USIA <span class="font-normal italic text-gray-300">(Wajib Diisi)</span>
                     </label>
                     <input type="number" name="usia" required min="1" placeholder="Usia Anda"
-                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
                 <!-- SEBUTKAN JUMLAHNYA (muncul kalau Rombongan) -->
@@ -143,7 +144,7 @@
                         SEBUTKAN JUMLAHNYA ? (Orang) <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <input type="number" name="jumlah_rombongan" id="jumlah_rombongan" min="2" placeholder="5"
-                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
             </div>

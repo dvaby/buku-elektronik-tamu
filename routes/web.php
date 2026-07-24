@@ -1,11 +1,25 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BukuTamuController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-route::get('/buku-tamu', [BukuTamuController::class, 'create'])->name('buku-tamu.create');
-route::post('/buku-tamu', [BukuTamuController::class, 'store'])->name('buku-tamu.store');
+Route::get('/buku-tamu', [BukuTamuController::class, 'create'])->name('buku-tamu.create');
+Route::post('/buku-tamu', [BukuTamuController::class, 'store'])->name('buku-tamu.store');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
