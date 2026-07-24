@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             setTimeout(() => {
                 window.location.href = href;
-            }, 400); // harus sama dengan durasi transisi di CSS
+            }, 200); // harus sama dengan durasi transisi di CSS
         });
     });
 });

@@ -58,7 +58,7 @@
                 <!-- INSTANSI / ALAMAT -->
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">
-                        INSTANSI / ALAMAT <span class="font-normal italic text-gray-300">(Wajib Diisi)</span>
+                        INSTANSI / ALAMAT <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <input type="text" name="instansi_alamat" required placeholder="Instansi anda bekerja / Alamat anda"
                            class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
@@ -67,24 +67,24 @@
                 <!-- KEPERLUAN -->
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">
-                        KEPERLUAN <span class="font-normal italic text-gray-300">(Wajib Diisi)</span>
+                        KEPERLUAN <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <select name="keperluan" required
                             class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                         <option value="">-- Pilih --</option>
                         {{-- GANTI DAFTAR INI SESUAI KEBUTUHAN KAMU --}}
-                        <option value="Kunjungan Baca/Pinjam Buku">Kunjungan Baca/Pinjam Buku</option>
-                        <option value="Penelitian">Penelitian</option>
-                        <option value="Kerja Sama">Kerja Sama</option>
-                        <option value="Studi Banding">Studi Banding</option>
-                        <option value="Lainnya">Lainnya</option>
+                        <option value="Penelitian atau Mencari Arsip">Penelitian atau Mencari Arsip</option>
+                        <option value="Kunjungan Atau Wisata Arsip">Kunjungan Atau Wisata Arsip</option>
+                        <option value="Magang Atau PKL">Magang Atau PKL</option>
+                        <option value="Konsultasi Kearsipan Atau Perpustakaan">Konsultasi Kearsipan Atau Perpustakaan</option>
+                        <option value="Umum Atau Lain-Lain">Umum Atau Lain-Lain</option>
                     </select>
                 </div>
 
                 <!-- NAMA -->
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">
-                        NAMA <span class="font-normal italic text-gray-300">(Wajib Diisi)</span>
+                        NAMA <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <input type="text" name="nama" required placeholder="Nama Lengkap Anda"
                            class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
@@ -119,7 +119,7 @@
                 <!-- ANDA SENDIRIAN -->
                 <div>
                     <label class="block text-xs font-semibold text-gray-600 mb-1">
-                        ANDA SENDIRIAN ? <span class="font-normal italic text-gray-300">(Wajib Diisi)</span>
+                        ANDA SENDIRIAN ? <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <select name="anda_sendirian" id="anda_sendirian" required
                             class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
@@ -140,10 +140,10 @@
                 <!-- SEBUTKAN JUMLAHNYA (muncul kalau Rombongan) -->
                 <div id="jumlah_rombongan_wrapper" class="hidden">
                     <label class="block text-xs font-semibold text-gray-600 mb-1">
-                        SEBUTKAN JUMLAHNYA ? (Orang) <span class="font-normal italic text-gray-300">(Wajib Diisi)</span>
+                        SEBUTKAN JUMLAHNYA ? (Orang) <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <input type="number" name="jumlah_rombongan" id="jumlah_rombongan" min="2" placeholder="5"
-                           class="kiosk-input w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                           class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 </div>
 
             </div>
