@@ -23,7 +23,7 @@
 
             <!-- Logo & Header -->
             <div class="flex items-center gap-3 mb-4 md:mb-11">
-                <img src="{{ asset('images/jateng.png') }}" alt="Logo" class="w-12 h-12 md:w-25 md:h-25">
+                <img src="{{ asset('images/jateng.png') }}" alt="Logo" class="w-18 h-20 md:w-25 md:h-25">
                 <div>
                     <h2 class="font-bold text-gray-800 text-lg md:text-4xl">Dinas Arpus</h2>
                     <p class="text-sm text-gray-600 md:text-2xl">Provinsi Jawa Tengah</p>

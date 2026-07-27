@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\BukuTamu;
+use App\Models\Keperluan;
 
 class BukuTamuController extends Controller
 {
     public function create()
     {
-        return view('buku-tamu.create');
+        $keperluans = Keperluan::orderBy('nama')->get();
+    return view('buku-tamu.create', compact('keperluans'));
     }
 
     public function store(Request $request)
@@ -30,5 +32,7 @@ class BukuTamuController extends Controller
         BukuTamu::create($validated);
 
         return redirect()->route('buku-tamu.create')->with('success', 'Terima kasih, data berhasil disimpan!');
-    }
+    
+    
+        }
 }

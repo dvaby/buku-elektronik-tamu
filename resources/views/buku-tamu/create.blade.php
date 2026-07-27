@@ -71,15 +71,12 @@
                         KEPERLUAN <span class="font-normal italic text-gray-600">(Wajib Diisi)</span>
                     </label>
                     <select name="keperluan" required
-                            class="kiosk-input w-full border border-gray-300 rounded-lg px-3 py-4 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
-                        <option value="">-- Pilih --</option>
-                        {{-- GANTI DAFTAR INI SESUAI KEBUTUHAN KAMU --}}
-                        <option value="Penelitian atau Mencari Arsip">Penelitian atau Mencari Arsip</option>
-                        <option value="Kunjungan Atau Wisata Arsip">Kunjungan Atau Wisata Arsip</option>
-                        <option value="Magang Atau PKL">Magang Atau PKL</option>
-                        <option value="Konsultasi Kearsipan Atau Perpustakaan">Konsultasi Kearsipan Atau Perpustakaan</option>
-                        <option value="Umum Atau Lain-Lain">Umum Atau Lain-Lain</option>
-                    </select>
+        class="w-full rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+    <option value="">-- Pilih --</option>
+    @foreach ($keperluans as $item)
+        <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+    @endforeach
+</select>
                 </div>
 
                 <!-- NAMA -->
