@@ -1518,53 +1518,126 @@
             }
         </style>
     @endif
+
+    <style>
+        .parallax-stage { perspective: 1200px; }
+
+        .parallax-layer,
+        .parallax-float { will-change: transform; transition: transform .12s ease-out; }
+
+        .text-enter {
+            opacity: 0;
+            transform: translateY(24px);
+            animation: text-enter-anim .7s cubic-bezier(.16,1,.3,1) forwards;
+        }
+        .delay-1 { animation-delay: .05s; }
+        .delay-2 { animation-delay: .15s; }
+        .delay-3 { animation-delay: .25s; }
+        .delay-4 { animation-delay: .35s; }
+        .delay-5 { animation-delay: .45s; }
+
+        @keyframes text-enter-anim {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .parallax-layer, .parallax-float { transition: none !important; transform: none !important; }
+            .text-enter { animation: none !important; opacity: 1 !important; transform: none !important; }
+            .img-enter { animation: none !important; opacity: 1 !important; transform: none !important; }
+        }
+
+        .img-enter {
+            animation: img-enter-anim .9s cubic-bezier(.16,1,.3,1) forwards;
+            animation-delay: .1s;
+        }
+        @keyframes img-enter-anim {
+            from { opacity: 0; transform: translateX(120px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
 </head>
 
 <body class="min-h-screen bg-white text-gray-900">
-    <main class="min-h-screen w-full flex flex-row overflow-hidden">
+    <main id="parallax-main" class="parallax-stage min-h-screen w-full flex flex-row overflow-hidden">
 
         <section class="flex-1 bg-white flex flex-col justify-center px-16">
 
             {{-- Logo (sudah nyatu dengan tulisan) --}}
-            <div class="mb-8">
+            <div class="mb-8 parallax-layer text-enter delay-1" data-depth="0.015">
                 <img src="{{ asset('images/logo-arpus.webp') }}" alt="Logo Dinas Arpus Provinsi Jawa Tengah"
-                    class="h-16 w-auto object-contain">
+                    class="h-[clamp(2.5rem,6vw,4rem)] w-auto object-contain">
             </div>
 
             {{-- Garis kuning kecil --}}
-            <div class="w-24 h-1.5 bg-yellow-400 rounded-full mb-2"></div>
+            <div class="w-[clamp(4rem,8vw,6rem)] h-1.5 bg-yellow-400 rounded-full mb-2 parallax-layer text-enter delay-2" data-depth="0.02"></div>
 
             {{-- Judul --}}
-            <h1 class="text-[clamp(1.5rem,4vw,2.25rem)] font-bold text-[#1E3A5F] mb-9 leading-tight">
+            <h1 class="text-[clamp(1.5rem,4vw,2.25rem)] font-bold text-[#1E3A5F] mb-9 leading-tight parallax-layer text-enter delay-3" data-depth="0.025">
                 PANEL BUKU TAMU
             </h1>
 
             {{-- Deskripsi --}}
-            <p class="text-slate-600 text-[clamp(0.95rem,1.8vw,1.125rem)] leading-snug mb-10 max-w-md">
+            <p class="text-slate-600 text-[clamp(0.95rem,1.8vw,1.125rem)] leading-snug mb-10 max-w-md parallax-layer text-enter delay-4" data-depth="0.01">
                 Selamat Datang di Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah.
                 Mohon mengisi Buku Tamu Elektronik kami.
             </p>
             {{-- Tombol Mulai --}}
-            <a href="{{ route('buku-tamu.form') }}" class="inline-block w-fit bg-yellow-400 hover:bg-yellow-500 transition-colors
-          text-[#1E3A5F] font-bold text-[clamp(0.875rem,1.8vw,1.125rem)]
-          px-[clamp(1.25rem,4vw,2rem)] py-[clamp(0.5rem,1.5vw,0.75rem)]
-          rounded-sm shadow-md text-center">
+            <a href="{{ route('welcome.form') }}" class="parallax-float text-enter delay-5 inline-block w-fit bg-yellow-400 hover:bg-yellow-500 transition-colors
+      text-[#1E3A5F] font-bold text-[clamp(0.875rem,1.8vw,1.125rem)]
+      px-[clamp(1.25rem,4vw,2rem)] py-[clamp(0.5rem,1.5vw,0.75rem)]
+      rounded-sm shadow-md text-center" data-depth="0.035">
                 Mulai
             </a>
 
         </section>
 
-       <section class="w-0 opacity-0 md:w-1/2 md:opacity-100
+        <section class="w-0 opacity-0 md:w-1/2 md:opacity-100
                  relative overflow-hidden shrink-0
-                 rounded-tl-[4rem] md:rounded-tl-[6rem]
-                 bg-white
+                 rounded-l-[4rem] md:rounded-l-[6rem]
+                 bg-white shadow-2xl img-enter
                  transition-all duration-700 ease-in-out">
             <img src="{{ asset('images/gedung-arpus.PNG') }}"
                 alt="Gedung Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah"
-                class="absolute inset-0 w-full h-full object-cover">
+                class="absolute inset-0 w-full h-full object-cover object-center">
         </section>
-
     </main>
+
+    <script>
+        (function () {
+            const stage = document.getElementById('parallax-main');
+            const layers = document.querySelectorAll('.parallax-layer, .parallax-float');
+            if (!stage) return;
+
+            let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+            const ease = 0.08;
+
+            stage.addEventListener('mousemove', (e) => {
+                const rect = stage.getBoundingClientRect();
+                targetX = (e.clientX - rect.left) / rect.width - 0.5;
+                targetY = (e.clientY - rect.top) / rect.height - 0.5;
+            });
+
+            stage.addEventListener('mouseleave', () => {
+                targetX = 0;
+                targetY = 0;
+            });
+
+            function animate() {
+                currentX += (targetX - currentX) * ease;
+                currentY += (targetY - currentY) * ease;
+
+                layers.forEach((el) => {
+                    const depth = parseFloat(el.dataset.depth || 0.02);
+                    const mx = currentX * depth * 100;
+                    const my = currentY * depth * 100;
+                    el.style.transform = `translate(${mx}px, ${my}px)`;
+                });
+
+                requestAnimationFrame(animate);
+            }
+            requestAnimationFrame(animate);
+        })();
+    </script>
 </body>
 
 </html>
