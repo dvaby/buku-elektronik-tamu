@@ -15,7 +15,7 @@
                     Data pengunjung yang muncul sesuai dengan bulan & tahun yang dipilih.
                 </div>
 
-                <form method="GET" class="flex items-end gap-2">
+                <form method="GET" class="flex flex-wrap items-end gap-2">
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Bulan</label>
                         <select name="bulan" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
@@ -35,6 +35,12 @@
                     <button class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold text-sm px-4 py-2 rounded-lg">
                         Tampilkan
                     </button>
+                    <a href="{{ route('laporan.bulanan.pdf', ['tahun' => $tahun, 'bulan' => $bulan]) }}"
+                       target="_blank"
+                       rel="noreferrer noopener"
+                       class="bg-gray-800 hover:bg-gray-900 text-white font-semibold text-sm px-4 py-2 rounded-lg">
+                        Export PDF
+                    </a>
                 </form>
 
                 @include('laporan._tabel')

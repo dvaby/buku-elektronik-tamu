@@ -15,7 +15,7 @@
                     Data pengunjung yang muncul sesuai dengan hari yang dipilih.
                 </div>
 
-                <form method="GET" class="flex items-end gap-2">
+                <form method="GET" class="flex flex-wrap items-end gap-2">
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Cari Hari</label>
                         <input type="date" name="tanggal" value="{{ $tanggal }}"
@@ -24,6 +24,12 @@
                     <button class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold text-sm px-4 py-2 rounded-lg">
                         Tampilkan
                     </button>
+                    <a href="{{ route('laporan.harian.pdf', ['tanggal' => $tanggal]) }}"
+                       target="_blank"
+                       rel="noreferrer noopener"
+                       class="bg-gray-800 hover:bg-gray-900 text-white font-semibold text-sm px-4 py-2 rounded-lg">
+                        Export PDF
+                    </a>
                 </form>
 
                 @include('laporan._tabel')

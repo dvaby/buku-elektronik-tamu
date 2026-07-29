@@ -33,9 +33,13 @@ Route::get('/dashboard/chart-keperluan', [DashboardController::class, 'chartKepe
 Route::get('/informasi-pengguna', [UserManagementController::class, 'informasi'])->name('akun-pengguna.informasi');
 Route::get('/pengunjung', [PengunjungController::class, 'index'])->name('pengunjung.index');
 Route::get('/laporan/harian', [LaporanController::class, 'harian'])->name('laporan.harian');
+Route::get('/laporan/harian/pdf', [LaporanController::class, 'harianPdf'])->name('laporan.harian.pdf');
 Route::get('/laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');
+Route::get('/laporan/bulanan/pdf', [LaporanController::class, 'bulananPdf'])->name('laporan.bulanan.pdf');
 Route::get('/laporan/tahunan', [LaporanController::class, 'tahunan'])->name('laporan.tahunan');
-Route::get('/laporan/custom', [LaporanController::class, 'custom'])->name('laporan.custom');   
+Route::get('/laporan/tahunan/pdf', [LaporanController::class, 'tahunanPdf'])->name('laporan.tahunan.pdf');
+Route::get('/laporan/custom', [LaporanController::class, 'custom'])->name('laporan.custom');
+Route::get('/laporan/custom/pdf', [LaporanController::class, 'customPdf'])->name('laporan.custom.pdf');
 
 });
 
