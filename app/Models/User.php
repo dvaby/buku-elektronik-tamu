@@ -22,7 +22,15 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-    ];
+        'group_id',
+    'aktif',
+];
+
+public function group()
+{
+    return $this->belongsTo(Group::class);
+}
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -46,4 +54,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    
 }
