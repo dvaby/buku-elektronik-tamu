@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Buku Tamu Elektronik</title>
+    <title>Log In Systems</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -1528,46 +1528,217 @@
     @endif
 </head>
 
-<body class="min-h-screen bg-white text-gray-900">
-    <main class="min-h-screen w-full grid lg:grid-cols-2">
-        <section
-            class="bg-linear-to-t from-gray-200 to-white flex flex-col items-start justify-center gap-8 p-2 sm:p-4 md:p-15 lg:p-20 border-r border-gray-200">
+<body class="min-h-screen bg-white text-gray-900 antialiased">
+    <main class="min-h-screen w-full grid grid-cols-1 lg:grid-cols-2">
 
-            <div class="flex items-center justify-center animate-fade-in">
-                <div class="flex justify-center items-center gap-4 p-2 px-4">
-                    <img src="{{ asset("icons/Logo.svg") }}" alt="Logo Image"
-                        class="w-18 md:w-25 h-18 md:h-25 animate-[fadeIn_0.6s_ease-in-out]" />
-                    <div class="flex flex-col">
-                        <h2 class="text-2xl md:text-4xl font-semibold">Dinas Arpus</h2>
-                        <h3 class="text-xl md:text-2xl font-medium text-gray-800">Provinsi Jawa tengah</h3>
-                    </div>
+        <!-- SECTION HERO / BANNER GAMBAR (Sembunyi total di Mobile, Muncul Besar di Desktop 'lg') -->
+        <div
+            class="hidden lg:flex relative w-full h-full p-4 sm:p-8 md:p-12 overflow-hidden items-center justify-center bg-gray-50 max-h-screen">
+
+            <section
+                class="relative w-full h-full max-h-screen flex items-center justify-center animate-fade-in rounded-2xl">
+
+                <!-- EFEK GLOW BACKGROUND -->
+                <div
+                    class="absolute -top-12 -left-12 w-32 md:w-56 h-32 md:h-56 bg-amber-300/40 rounded-full blur-3xl pointer-events-none z-0">
                 </div>
+                <div
+                    class="absolute -bottom-12 -right-12 w-40 md:w-64 h-40 md:h-64 bg-yellow-400/30 rounded-full blur-3xl pointer-events-none z-0">
+                </div>
+
+                <!-- ================= EFEK BINTANG-BINTANG (RESPONSIF) ================= -->
+
+                <!-- Bintang 1 (Kiri Atas) -->
+                <div class="absolute -top-4 sm:-top-6 -left-2 sm:-left-6 text-amber-400 animate-twinkle pointer-events-none z-20"
+                    style="animation-delay: 0s;">
+                    <svg class="w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 filter-glow" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                    </svg>
+                </div>
+
+                <!-- Bintang 2 (Kanan Atas) -->
+                <div class="absolute -top-5 sm:-top-8 -right-2 sm:-right-6 text-amber-300 animate-twinkle pointer-events-none z-20"
+                    style="animation-delay: 1.2s;">
+                    <svg class="w-5 sm:w-7 md:w-9 h-5 sm:h-7 md:h-9 filter-glow" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                    </svg>
+                </div>
+
+                <!-- Bintang 3 (Tengah Kanan) -->
+                <div class="absolute top-1/2 -right-3 sm:-right-8 -translate-y-1/2 text-yellow-500 animate-twinkle pointer-events-none z-20"
+                    style="animation-delay: 0.6s;">
+                    <svg class="w-7 sm:w-10 md:w-12 h-7 sm:h-10 md:h-12 filter-glow" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                    </svg>
+                </div>
+
+                <!-- Bintang 4 (Kiri Bawah) -->
+                <div class="absolute -bottom-4 sm:-bottom-6 -left-3 sm:-left-6 text-amber-400 animate-twinkle pointer-events-none z-20"
+                    style="animation-delay: 1.8s;">
+                    <svg class="w-5 sm:w-7 md:w-8 h-5 sm:h-7 md:h-8 filter-glow" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                    </svg>
+                </div>
+
+                <!-- Bintang 5 (Kanan Bawah) -->
+                <div class="absolute -bottom-5 sm:-bottom-7 right-4 sm:right-8 text-yellow-400 animate-twinkle pointer-events-none z-20"
+                    style="animation-delay: 0.9s;">
+                    <svg class="w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 filter-glow" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" />
+                    </svg>
+                </div>
+
+                <!-- GAMBAR UTAMA MELAYANG (Ukuran Besar & Mengisi Container) -->
+                <div class="w-full h-full animate-float relative z-10 flex items-center justify-center">
+                    <img src="{{ asset('images/Authenticate.png') }}" alt="Logo Image"
+                        class="w-full h-full rounded-xl object-cover border border-gray-600 shadow-2xl" />
+                </div>
+
+            </section>
+
+        </div>
+
+        <!-- SECTION FORM LOGIN (Ukuran Teks & Input Besar) -->
+        <section
+            class="bg-gradient-to-t from-gray-200 to-white flex flex-col items-center justify-between p-4 sm:p-6 md:p-8 lg:p-10 border-t lg:border-t-0 lg:border-l border-gray-300 w-full min-h-screen max-h-screen">
+
+            <div class="w-full"></div> <!-- Spacer atas -->
+
+            <div class="w-full max-w-md flex flex-col items-center gap-6 my-auto">
+                <!-- TITLE & SUBTITLE -->
+                <div class="flex flex-col items-center justify-center text-center gap-1 my-2">
+                    <h1
+                        class="text-3xl md:text-4xl font-extrabold uppercase tracking-wide text-blue-600 animate-slide-in-left">
+                        E-VISITOR
+                    </h1>
+
+                    <p
+                        class="text-base md:text-xl font-medium text-gray-700 animate-slide-in-left [animation-delay:0.2s]">
+                        Sistem Informasi Pengunjung <strong>Dinas Kearsipan</strong>
+                    </p>
+
+                    <p
+                        class="text-sm md:text-base font-normal text-gray-600 max-w-sm mt-1 animate-slide-in-left [animation-delay:0.3s]">
+                        Masukkan Username dan Password anda untuk Log In
+                    </p>
+                </div>
+
+                <!-- FORM INPUT USERNAME & PASSWORD -->
+                <form action="#" method="POST"
+                    class="w-full flex flex-col items-center gap-4 mt-2 animate-slide-in-bottom">
+                    @csrf
+
+                    <!-- INPUT USERNAME -->
+                    <div class="w-full flex flex-col gap-1.5 text-left">
+                        <label for="username" class="text-xl font-semibold text-gray-700">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Masukkan username" required
+                            class="w-full px-4 py-2.5 md:py-3 rounded-lg border border-gray-300 bg-white text-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition duration-200 shadow-xs" />
+                    </div>
+
+                    <!-- INPUT PASSWORD DENGAN TOGGLE SHOW/HIDE (ALPINE.JS) -->
+                    <div x-data="{ showPassword: false }" class="w-full flex flex-col gap-1.5 text-left">
+                        <label for="password" class="text-xl font-semibold text-gray-700">Password</label>
+
+                        <div class="relative w-full flex items-center">
+                            <input :type="showPassword ? 'text' : 'password'" id="password" name="password"
+                                placeholder="Masukkan password" required
+                                class="w-full pl-4 pr-12 py-2.5 md:py-3 rounded-lg border border-gray-300 bg-white text-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-transparent transition duration-200 shadow-xs" />
+
+                            <!-- Tombol Icon Eye -->
+                            <button type="button" @click="showPassword = !showPassword"
+                                class="absolute right-3.5 text-gray-400 hover:text-gray-700 focus:outline-none cursor-pointer p-1.5 rounded-md hover:bg-gray-100 transition-colors duration-150 flex items-center justify-center">
+
+                                <!-- Icon Mata Terbuka (Show Password) -->
+                                <svg x-show="!showPassword" class="w-6 h-6" fill="none" stroke="currentColor"
+                                    stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+
+                                <!-- Icon Mata Coret / Tertutup (Hide Password - Material Solid) -->
+                                <svg x-show="showPassword" x-cloak class="w-6 h-6" fill="currentColor"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.17c0-1.66-1.34-3-3-3l-.17.02z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- TOMBOL LOG IN BESAR -->
+                    <button type="submit"
+                        class="mt-3 w-full bg-gradient-to-t from-yellow-400 to-yellow-300 text-yellow-900 p-2 px-4 md:p-4 md:px-8 text-xl md:text-3xl rounded-md font-extrabold border-[1.5px] border-yellow-500 shadow-[0_2.5px_0_#ca8a04] hover:bg-yellow-400 cursor-pointer active:scale-98 hover:scale-105 duration-200 transition-all ease-in-out animate-slide-in-bottom">
+                        Masuk
+                    </button>
+                </form>
             </div>
 
-            <div
-                class="h-1.5 w-18 md:h-2 md:w-24 bg-yellow-300 ml-6 rounded animate-slide-in-left [animation-delay:0.6s]">
-            </div>
+            <!-- FOOTER / IDENTITY TEXT -->
+            <footer class="mt-auto pt-4 text-center">
+                <p class="text-xs md:text-sm font-semibold text-gray-500 max-w-xs md:max-w-md uppercase tracking-wider">
+                    Dinas Kearsipan Dan Perpustakaan Provinsi Jawa Tengah
+                </p>
+            </footer>
 
-            <h1 class="text-3xl md:text-4xl ml-6 font-bold uppercase animate-slide-in-left [animation-delay:0.6s]">
-                Panel Buku Tamu
-            </h1>
-
-            <p class="text-md md:text-2xl ml-6 animate-slide-in-left [animation-delay:0.6s]">
-                Selamat Datang di Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah. Mohon mengisi Buku Tamu
-                Elektronik kami.
-            </p>
-
-            <button
-                class="bg-linear-to-t from-yellow-400 to-yellow-300 text-yellow-900 p-2 px-4 md:p-4 md:px-8 text-xl md:text-3xl ml-6 rounded-md font-extrabold border-[1.5px] border-yellow-500 shadow-[0_2.5px_0_#ca8a04] hover:bg-yellow-400 cursor-pointer active:scale-98 hover:scale-105 duration-200 transition-all ease-in-out animate-slide-in-bottom">
-                Mulai
-            </button>
-        </section>
-
-        <section class="max-h-screen hidden lg:block w-full bg-slate-100 p-8 animate-fade-in">
-            <img src="{{ asset('images/Banner.png') }}" alt="Logo Image"
-                class="w-full h-full rounded-xl object-cover border border-gray-600" />
         </section>
     </main>
+
+    <!-- CSS CUSTOM -->
+    <style>
+        .filter-glow {
+            filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.9)) drop-shadow(0 0 12px rgba(251, 191, 36, 0.7)) drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+        }
+
+        @keyframes floatAnimation {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .animate-float {
+            animation: floatAnimation 4s ease-in-out infinite;
+        }
+
+        @keyframes twinkleAnimation {
+
+            0%,
+            100% {
+                opacity: 0.35;
+                transform: scale(0.7) rotate(0deg);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.25) rotate(15deg);
+            }
+        }
+
+        .animate-twinkle {
+            animation: twinkleAnimation 2.8s ease-in-out infinite;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .animate-float,
+            .animate-twinkle {
+                animation: none;
+            }
+        }
+    </style>
 </body>
 
 </html>
