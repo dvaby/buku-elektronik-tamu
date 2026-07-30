@@ -82,4 +82,4 @@
     </script>
 
     @vite('resources/js/dashboard-chart.js')
-</x-app-layout>xnp
+</x-app-layout>          
