@@ -1,22 +1,48 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@keyframes marquee {
-    0%   { transform: translateX(100%); }
-    100% { transform: translateX(-100%); }
-}
-.animate-marquee {
-    animation: marquee 15s linear infinite;
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source "../**/*.blade.php";
+@source "../**/*.js";
+@source "../**/*.vue";
+
+@theme {
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideInLeft {
+        from {
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    @keyframes slideInBottom {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    --animate-fade-in: fadeIn 0.8s ease-out forwards;
+    --animate-slide-in-left: slideInLeft 0.8s ease-out forwards;
+    --animate-slide-in-bottom: slideInBottom 0.8s ease-out forwards;
 }
 
-body {
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-body.page-fade-in {
-    opacity: 1;
-}
-body.page-fade-out {
-    opacity: 0;
+[x-cloak] {
+    display: none !important;
 }

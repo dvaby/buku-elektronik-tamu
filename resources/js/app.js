@@ -1,7 +1,5 @@
-import Alpine from 'alpinejs';
-import collapse from '@alpinejs/collapse';
-
-Alpine.plugin(collapse);
+import "./bootstrap";
+import Alpine from "alpinejs";
 
 window.Alpine = Alpine;
 Alpine.start();
