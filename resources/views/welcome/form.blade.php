@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Buku Tamu Elektronik</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -312,6 +313,7 @@
             const errorList = document.getElementById('errorList');
             const backBtn = document.getElementById('backBtn');
             const mainContent = document.getElementById('mainContent');
+            const submitBtn = form.querySelector('button[type="submit"]');
 
             form.addEventListener('submit', function (e) {
                 e.preventDefault();
@@ -337,6 +339,11 @@
                     }
                 }
 
+                // validasi tambahan: kalau rombongan, jumlah wajib diisi
+                if (data.sendirian === 'Ya' && (!data.catatan_tambahan || data.catatan_tambahan.trim() === '')) {
+                    errors.push('Jumlah rombongan wajib diisi');
+                }
+
                 if (errors.length > 0) {
                     errors.forEach(msg => {
                         const li = document.createElement('li');
@@ -349,10 +356,56 @@
 
                 errorBox.classList.add('hidden');
 
-                thanksName.textContent = data.nama ? ', ' + data.nama : '';
-                formCard.classList.add('hidden');
-                thanksCard.classList.remove('hidden');
-                closeKeyboard();
+                // disable tombol biar gak double submit
+                submitBtn.disabled = true;
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.textContent = 'Menyimpan...';
+
+                fetch("{{ route('buku-tamu.store') }}", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(async res => {
+                    if (!res.ok) {
+                        const errData = await res.json().catch(() => null);
+                        throw errData || { message: 'Gagal menyimpan data' };
+                    }
+                    return res.json();
+                })
+                .then(() => {
+                    thanksName.textContent = data.nama ? ', ' + data.nama : '';
+                    formCard.classList.add('hidden');
+                    thanksCard.classList.remove('hidden');
+                    closeKeyboard();
+                })
+                .catch(err => {
+                    errorList.innerHTML = '';
+
+                    if (err && err.errors) {
+                        Object.values(err.errors).forEach(msgs => {
+                            msgs.forEach(msg => {
+                                const li = document.createElement('li');
+                                li.textContent = msg;
+                                errorList.appendChild(li);
+                            });
+                        });
+                    } else {
+                        const li = document.createElement('li');
+                        li.textContent = (err && err.message) || 'Terjadi kesalahan saat menyimpan data. Silakan coba lagi.';
+                        errorList.appendChild(li);
+                    }
+
+                    errorBox.classList.remove('hidden');
+                })
+                .finally(() => {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
+                });
             });
 
             backBtn.addEventListener('click', function () {
