@@ -11,7 +11,7 @@ class BukuTamuController extends Controller
     public function create()
     {
         $keperluans = Keperluan::orderBy('nama')->get();
-    return view('buku-tamu.create', compact('keperluans'));
+    return view('bukutamu.welcome.create', compact('keperluans'));
     }
 
     public function store(Request $request)
@@ -31,7 +31,7 @@ class BukuTamuController extends Controller
 
         BukuTamu::create($validated);
 
-        return redirect()->route('buku-tamu.create')->with('success', 'Terima kasih, data berhasil disimpan!');
+        return redirect()->route('bukutamu.create')->with('success', 'Terima kasih, data berhasil disimpan!');
     
     
         }

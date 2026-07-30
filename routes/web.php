@@ -14,8 +14,13 @@ Route::get('/', function () {
     return view('auth/login');
 })->name('auth/login');
 
+<<<<<<< HEAD
 Route::get('/welcome/form', [BukuTamuController::class, 'create'])->name('buku-tamu.create');
 Route::post('/welcome/form', [BukuTamuController::class, 'store'])->name('buku-tamu.store');
+=======
+Route::get('/bukutamu', [BukuTamuController::class, 'create'])->name('bukutamu.create');
+Route::post('/bukutamu', [BukuTamuController::class, 'store'])->name('bukutamu.store');
+>>>>>>> DAVINBARU
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
