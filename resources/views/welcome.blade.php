@@ -44,7 +44,7 @@
             </p>
 
             <!-- Tombol -->
-            <a href="{{ route('buku-tamu.create') }}"
+            <a href="{{ route('bukutamu.create') }}"
                class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-8 md:px-17 py-2.5 md:py-4 rounded-lg w-fit transition md:text-2xl">
                 Mulai
             </a>

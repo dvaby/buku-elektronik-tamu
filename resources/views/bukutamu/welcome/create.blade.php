@@ -85,14 +85,14 @@
     BUKU TAMU ELEKTRONIK
 </h1>
 
-            <form action="{{ route('buku-tamu.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form action="{{ route('bukutamu.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <!-- IDENTITAS -->
                     <div>
-                        <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
+                        <label class="block text-x font-semibold text-gray-600 mb-1 p-5      px-4">
                             IDENTITAS <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
                         <input type="text" name="identitas" required inputmode="none"

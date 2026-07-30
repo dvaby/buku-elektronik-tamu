@@ -14,8 +14,8 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/buku-tamu', [BukuTamuController::class, 'create'])->name('buku-tamu.create');
-Route::post('/buku-tamu', [BukuTamuController::class, 'store'])->name('buku-tamu.store');
+Route::get('/bukutamu', [BukuTamuController::class, 'create'])->name('bukutamu.create');
+Route::post('/bukutamu', [BukuTamuController::class, 'store'])->name('bukutamu.store');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
