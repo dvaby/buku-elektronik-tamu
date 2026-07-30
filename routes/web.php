@@ -11,8 +11,8 @@ use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\LaporanController;
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('welcome');
+    return view('auth/login');
+})->name('auth/login');
 
 Route::get('/buku-tamu', [BukuTamuController::class, 'create'])->name('buku-tamu.create');
 Route::post('/buku-tamu', [BukuTamuController::class, 'store'])->name('buku-tamu.store');
