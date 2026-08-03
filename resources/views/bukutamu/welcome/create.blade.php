@@ -33,6 +33,48 @@
             animation: marquee 35s linear infinite;
         }
 
+        /* ===== Animasi entrance ===== */
+        @keyframes bg-zoom {
+            from { transform: scale(1.12); }
+            to   { transform: scale(1); }
+        }
+        @keyframes card-enter {
+            from { opacity: 0; transform: translateY(30px) scale(.97); }
+            to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes bar-enter {
+            from { opacity: 0; transform: translateY(-16px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fade-up {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes kb-slide-up {
+            from { transform: translateY(100%); }
+            to   { transform: translateY(0); }
+        }
+
+        .bg-enter    { animation: bg-zoom 1.4s cubic-bezier(.16,1,.3,1) forwards; }
+        .card-enter  { opacity: 0; animation: card-enter .8s cubic-bezier(.16,1,.3,1) forwards; animation-delay: .1s; }
+        .bar-enter   { opacity: 0; animation: bar-enter .6s cubic-bezier(.16,1,.3,1) forwards; animation-delay: .35s; }
+        .title-enter { opacity: 0; animation: fade-up .6s cubic-bezier(.16,1,.3,1) forwards; animation-delay: .5s; }
+        .field-enter { opacity: 0; animation: fade-up .55s cubic-bezier(.16,1,.3,1) forwards; }
+        .btn-enter   { opacity: 0; animation: fade-up .55s cubic-bezier(.16,1,.3,1) forwards; }
+        .back-enter  { opacity: 0; animation: fade-up .5s cubic-bezier(.16,1,.3,1) forwards; }
+
+        .kb-show { animation: kb-slide-up .25s ease-out forwards; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .bg-enter, .card-enter, .bar-enter, .title-enter,
+            .field-enter, .btn-enter, .back-enter, .kb-show {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+        /* ===== End animasi entrance ===== */
+
         #customKeyboard {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
@@ -87,7 +129,7 @@
 
     <!-- Tombol Back -->
     <a href="{{ route('welcome') }}"
-        class="fixed top-14 left-4 z-50 flex items-center gap-3 bg-white/90 hover:bg-white text-gray-900 font-bold text-lg px-6 py-3 rounded-xl shadow-lg transition">
+        class="back-enter fixed top-14 left-4 z-50 flex items-center gap-3 bg-white/90 hover:bg-white text-gray-900 font-bold text-lg px-6 py-3 rounded-xl shadow-lg transition">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"
             stroke-width="2">
             <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
@@ -96,12 +138,14 @@
     </a>
 
     <!-- Foto background -->
-    <img src="{{ asset('images/darpus.jpg') }}" alt="Gedung Arpus"
-        class="fixed inset-0 w-full h-full object-cover -z-10">
+    <div class="fixed inset-0 -z-10 overflow-hidden">
+        <img src="{{ asset('images/darpus.jpg') }}" alt="Gedung Arpus"
+            class="bg-enter w-full h-full object-cover">
+    </div>
     <div class="fixed inset-0 bg-black/60 -z-10"></div>
 
     <!-- Teks berjalan -->
-    <div class="bg-yellow-500 text-gray-900 font-semibold text-2xl px-4 p-2 overflow-hidden whitespace-nowrap">
+    <div class="bar-enter bg-yellow-500 text-gray-900 font-semibold text-2xl px-4 p-2 overflow-hidden whitespace-nowrap">
         <span class="animate-marquee">
             Selamat Datang di Dinas Kearsipan dan Perpustakaan Provinsi Jawa Tengah — Mohon isi Buku Tamu Elektronik
             dengan data yang benar
@@ -109,10 +153,10 @@
     </div>
 
     <div class="flex items-center justify-center px-4 py-8 pb-40">
-        <div class="bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-3xl">
+        <div class="card-enter bg-white/95 backdrop-blur rounded-2xl shadow-2xl p-6 md:p-8 w-full max-w-3xl">
 
             <h1
-                class="text-center text-2xl md:text-3xl font-extrabold text-gray-900 pb-3 mb-6 border-b-2 border-yellow-500">
+                class="title-enter text-center text-2xl md:text-3xl font-extrabold text-gray-900 pb-3 mb-6 border-b-2 border-yellow-500">
                 BUKU TAMU ELEKTRONIK
             </h1>
 
@@ -122,7 +166,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                     <!-- IDENTITAS -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.55s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-5      px-4">
                             IDENTITAS <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
@@ -132,7 +176,7 @@
                     </div>
 
                     <!-- NOMOR HP -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.6s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             NOMOR HP <span class="font-normal italic text-red-600">(Data akan kami jaga
                                 kerahasiaannya)</span>
@@ -142,7 +186,7 @@
                     </div>
 
                     <!-- INSTANSI / ALAMAT -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.65s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             INSTANSI / ALAMAT <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
@@ -152,7 +196,7 @@
                     </div>
 
                     <!-- KEPERLUAN -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.7s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             KEPERLUAN <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
@@ -166,7 +210,7 @@
                         </select>
                     </div>
                     <!-- NAMA -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.75s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             NAMA <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
@@ -175,7 +219,7 @@
                     </div>
 
                     <!-- PEGAWAI YANG INGIN DITEMUI -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.8s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             PEGAWAI YANG INGIN ANDA TEMUI ?
                         </label>
@@ -184,7 +228,7 @@
                     </div>
 
                     <!-- JENIS KELAMIN -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.85s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             JENIS KELAMIN <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
@@ -203,7 +247,7 @@
                     </div>
 
                     <!-- ANDA SENDIRIAN -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.9s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             ANDA SENDIRIAN ? <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
@@ -217,7 +261,7 @@
                     </div>
 
                     <!-- USIA -->
-                    <div>
+                    <div class="field-enter" style="animation-delay:.95s">
                         <label class="block text-x font-semibold text-gray-600 mb-1 p-2 px-4">
                             USIA <span class="font-normal italic text-red-600">(Wajib Diisi)</span>
                         </label>
@@ -239,7 +283,8 @@
                 </div>
 
                 <button type="submit"
-                    class="w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold text-lg px-4 py-4 rounded-lg transition">
+                    class="btn-enter w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold text-lg px-4 py-4 rounded-lg transition"
+                    style="animation-delay:1s">
                     Simpan
                 </button>
             </form>
@@ -327,6 +372,7 @@
 
             function closeKeyboard() {
                 kbBox.classList.add('hidden');
+                kbBox.classList.remove('kb-show');
                 if (activeInput) {
                     activeInput.blur();
                     activeInput = null;
@@ -367,6 +413,7 @@
                 input.addEventListener('focus', () => {
                     activeInput = input;
                     kbBox.classList.remove('hidden');
+                    kbBox.classList.add('kb-show');
                     adjustFormPosition(input);
                 });
             });
