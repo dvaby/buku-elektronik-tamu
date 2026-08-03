@@ -47,6 +47,13 @@ class DashboardController extends Controller
         return redirect()->route('dashboard')->with('success', 'Feedback berhasil diperbarui.');
     }
 
+    public function destroyFeedback(Feedback $feedback)
+    {
+        $feedback->delete();
+
+        return redirect()->route('dashboard')->with('success', 'Feedback berhasil dihapus.');
+    }
+
     // Grafik: jumlah pengunjung per bulan dalam 1 tahun
     public function chartBulan(Request $request)
     {

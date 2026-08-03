@@ -123,8 +123,13 @@
                                 <span class="block mb-1">Komentar</span>
                                 <textarea name="feedback" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">{{ old('feedback', $feedback->feedback) }}</textarea>
                             </label>
-                            <div class="flex justify-end">
+                            <div class="flex justify-end gap-2">
                                 <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded-lg">Simpan</button>
+                                <form action="{{ route('dashboard.feedback.destroy', $feedback) }}" method="POST" onsubmit="return confirm('Hapus feedback ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-semibold px-4 py-2 rounded-lg">Hapus</button>
+                                </form>
                             </div>
                         </form>
                     </div>

@@ -36,8 +36,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/chart-tanggal', [DashboardController::class, 'chartTanggal'])->middleware('auth')->name('dashboard.chart-tanggal');
     Route::get('/dashboard/chart-keperluan', [DashboardController::class, 'chartKeperluan'])->middleware('auth')->name('dashboard.chart-keperluan');
     Route::put('/dashboard/feedback/{feedback}', [DashboardController::class, 'updateFeedback'])->middleware('auth')->name('dashboard.feedback.update');
+    Route::delete('/dashboard/feedback/{feedback}', [DashboardController::class, 'destroyFeedback'])->middleware('auth')->name('dashboard.feedback.destroy');
     Route::get('/informasi-pengguna', [UserManagementController::class, 'informasi'])->name('akun-pengguna.informasi');
     Route::get('/pengunjung', [PengunjungController::class, 'index'])->name('pengunjung.index');
+    Route::get('/pengunjung/{bukuTamu}/edit', [PengunjungController::class, 'edit'])->name('pengunjung.edit');
+    Route::put('/pengunjung/{bukuTamu}', [PengunjungController::class, 'update'])->name('pengunjung.update');
+    Route::delete('/pengunjung/{bukuTamu}', [PengunjungController::class, 'destroy'])->name('pengunjung.destroy');
     Route::get('/laporan/harian', [LaporanController::class, 'harian'])->name('laporan.harian');
     Route::get('/laporan/harian/pdf', [LaporanController::class, 'harianPdf'])->name('laporan.harian.pdf');
     Route::get('/laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');

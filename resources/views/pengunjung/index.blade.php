@@ -55,6 +55,7 @@
                                 <th class="px-4 py-3">Jumlah</th>
                                 <th class="px-4 py-3">Tanggal Datang</th>
                                 <th class="px-4 py-3">Jenis Kelamin</th>
+                                <th class="px-4 py-3">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100">
@@ -72,6 +73,16 @@
                                     </td>
                                     <td class="px-4 py-3 text-gray-500">{{ $tamu->created_at->format('d M Y') }}</td>
                                     <td class="px-4 py-3 text-gray-600">{{ $tamu->jenis_kelamin }}</td>
+                                    <td class="px-4 py-3">
+                                        <div class="flex gap-2">
+                                            <a href="{{ route('pengunjung.edit', $tamu) }}" class="bg-blue-500 hover:bg-blue-600 text-white text-xs px-3 py-1.5 rounded-lg">Edit</a>
+                                            <form action="{{ route('pengunjung.destroy', $tamu) }}" method="POST" onsubmit="return confirm('Hapus data pengunjung ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-lg">Hapus</button>
+                                            </form>
+                                        </div>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr>
