@@ -6,23 +6,23 @@
     <title>{{ $reportTitle }}</title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; color: #333; margin: 0; padding: 0; }
-        .page { width: 100%; margin: 0 auto; padding: 16px; }
-        .heading { text-align: center; margin-bottom: 12px; }
-        .heading h1 { font-size: 18px; margin: 0; }
-        .heading p { margin: 2px 0; font-size: 12px; }
-        .info { margin-bottom: 14px; font-size: 11px; }
+        .page { width: 100%; margin: 0 auto; padding: 8px 10px; }
+        .heading { text-align: center; margin-bottom: 8px; }
+        .heading h1 { font-size: 16px; margin: 0; }
+        .heading p { margin: 1px 0; font-size: 10px; }
+        .info { margin-bottom: 8px; font-size: 9.5px; }
         .info .left, .info .right { display: inline-block; vertical-align: top; }
         .info .left { width: 55%; }
         .info .right { width: 43%; text-align: right; }
-        table { width: 100%; border-collapse: collapse; font-size: 9.5px; }
-        table thead th, table tbody td { border: 1px solid #333; padding: 6px 4px; }
+        table { width: 100%; border-collapse: collapse; font-size: 8px; }
+        table thead th, table tbody td { border: 1px solid #333; padding: 3px 2px; }
         table thead th { background: #f5f5f5; }
-        .month-cell { line-height: 1.2; }
+        .month-cell { line-height: 1.1; }
         .month-cell span { display: block; }
-        .footer { margin-top: 18px; font-size: 11px; }
-        .footer .signature { width: 250px; float: right; text-align: center; }
-        .bottom-summary { margin-top: 16px; font-size: 11px; }
-        .bottom-summary .box { display: inline-block; width: 24%; padding: 8px; border: 1px solid #333; background: #f6f6f6; box-sizing: border-box; margin-right: 4px; }
+        .footer { margin-top: 10px; font-size: 9.5px; }
+        .footer .signature { width: 220px; float: right; text-align: center; }
+        .bottom-summary { margin-top: 10px; font-size: 9px; }
+        .bottom-summary .box { display: inline-block; width: 24%; padding: 6px; border: 1px solid #333; background: #f6f6f6; box-sizing: border-box; margin-right: 1%; }
         .bottom-summary .box:last-child { margin-right: 0; }
     </style>
 </head>

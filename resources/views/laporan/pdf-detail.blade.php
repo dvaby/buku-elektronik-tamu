@@ -6,20 +6,20 @@
     <title>{{ $reportTitle }}</title>
     <style>
         body { font-family: DejaVu Sans, sans-serif; color: #333; margin: 0; padding: 0; }
-        .page { width: 100%; margin: 0 auto; padding: 16px; }
-        .heading { text-align: center; margin-bottom: 16px; }
-        .heading h1 { font-size: 18px; margin: 0; }
-        .heading p { margin: 3px 0; font-size: 12px; }
-        .info { margin: 16px 0; font-size: 11px; }
+        .page { width: 100%; margin: 0 auto; padding: 8px 10px; }
+        .heading { text-align: center; margin-bottom: 8px; }
+        .heading h1 { font-size: 16px; margin: 0; }
+        .heading p { margin: 1px 0; font-size: 10px; }
+        .info { margin: 8px 0; font-size: 9.5px; }
         .info .left, .info .right { display: inline-block; vertical-align: top; }
         .info .left { width: 55%; }
         .info .right { width: 43%; text-align: right; }
-        table { width: 100%; border-collapse: collapse; font-size: 10px; }
-        table thead th { border: 1px solid #333; padding: 7px 5px; background: #f5f5f5; }
-        table tbody td { border: 1px solid #333; padding: 6px 5px; vertical-align: top; }
-        .footer { margin-top: 20px; font-size: 11px; }
-        .footer .signature { width: 250px; float: right; text-align: center; }
-        .no-data { text-align: center; margin: 24px 0; font-size: 11px; }
+        table { width: 100%; border-collapse: collapse; font-size: 8px; }
+        table thead th { border: 1px solid #333; padding: 3px 2px; background: #f5f5f5; }
+        table tbody td { border: 1px solid #333; padding: 3px 2px; vertical-align: top; }
+        .footer { margin-top: 10px; font-size: 9.5px; }
+        .footer .signature { width: 220px; float: right; text-align: center; }
+        .no-data { text-align: center; margin: 16px 0; font-size: 10px; }
     </style>
 </head>
 <body>
