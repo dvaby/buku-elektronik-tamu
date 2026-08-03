@@ -11,11 +11,11 @@ use App\Http\Controllers\PengunjungController;
 use App\Http\Controllers\LaporanController;
 
 Route::get('/', function () {
-    return view('auth/login');
-})->name('auth/login');
+    return view('welcome.welcome');
+})->name('welcome');
 
 Route::get('/welcome', function () {
-    return view('welcome');
+    return view('welcome.welcome');
 })->name('welcome');
 
 Route::get('/bukutamu', [BukuTamuController::class, 'create'])->name('bukutamu.create');
