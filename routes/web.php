@@ -14,13 +14,12 @@ Route::get('/', function () {
     return view('auth/login');
 })->name('auth/login');
 
-<<<<<<< HEAD
-Route::get('/welcome/form', [BukuTamuController::class, 'create'])->name('buku-tamu.create');
-Route::post('/welcome/form', [BukuTamuController::class, 'store'])->name('buku-tamu.store');
-=======
+Route::get('/welcome', function () {
+    return view('welcome');
+})->name('welcome');
+
 Route::get('/bukutamu', [BukuTamuController::class, 'create'])->name('bukutamu.create');
 Route::post('/bukutamu', [BukuTamuController::class, 'store'])->name('bukutamu.store');
->>>>>>> DAVINBARU
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -30,21 +29,21 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('role', PermissionController::class) ->parameters(['role' => 'role']);
+    Route::resource('role', PermissionController::class)->parameters(['role' => 'role']);
 
-Route::get('/dashboard/chart-bulan', [DashboardController::class, 'chartBulan'])->middleware('auth')->name('dashboard.chart-bulan');
-Route::get('/dashboard/chart-tanggal', [DashboardController::class, 'chartTanggal'])->middleware('auth')->name('dashboard.chart-tanggal');
-Route::get('/dashboard/chart-keperluan', [DashboardController::class, 'chartKeperluan'])->middleware('auth')->name('dashboard.chart-keperluan');
-Route::get('/informasi-pengguna', [UserManagementController::class, 'informasi'])->name('akun-pengguna.informasi');
-Route::get('/pengunjung', [PengunjungController::class, 'index'])->name('pengunjung.index');
-Route::get('/laporan/harian', [LaporanController::class, 'harian'])->name('laporan.harian');
-Route::get('/laporan/harian/pdf', [LaporanController::class, 'harianPdf'])->name('laporan.harian.pdf');
-Route::get('/laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');
-Route::get('/laporan/bulanan/pdf', [LaporanController::class, 'bulananPdf'])->name('laporan.bulanan.pdf');
-Route::get('/laporan/tahunan', [LaporanController::class, 'tahunan'])->name('laporan.tahunan');
-Route::get('/laporan/tahunan/pdf', [LaporanController::class, 'tahunanPdf'])->name('laporan.tahunan.pdf');
-Route::get('/laporan/custom', [LaporanController::class, 'custom'])->name('laporan.custom');
-Route::get('/laporan/custom/pdf', [LaporanController::class, 'customPdf'])->name('laporan.custom.pdf');
+    Route::get('/dashboard/chart-bulan', [DashboardController::class, 'chartBulan'])->middleware('auth')->name('dashboard.chart-bulan');
+    Route::get('/dashboard/chart-tanggal', [DashboardController::class, 'chartTanggal'])->middleware('auth')->name('dashboard.chart-tanggal');
+    Route::get('/dashboard/chart-keperluan', [DashboardController::class, 'chartKeperluan'])->middleware('auth')->name('dashboard.chart-keperluan');
+    Route::get('/informasi-pengguna', [UserManagementController::class, 'informasi'])->name('akun-pengguna.informasi');
+    Route::get('/pengunjung', [PengunjungController::class, 'index'])->name('pengunjung.index');
+    Route::get('/laporan/harian', [LaporanController::class, 'harian'])->name('laporan.harian');
+    Route::get('/laporan/harian/pdf', [LaporanController::class, 'harianPdf'])->name('laporan.harian.pdf');
+    Route::get('/laporan/bulanan', [LaporanController::class, 'bulanan'])->name('laporan.bulanan');
+    Route::get('/laporan/bulanan/pdf', [LaporanController::class, 'bulananPdf'])->name('laporan.bulanan.pdf');
+    Route::get('/laporan/tahunan', [LaporanController::class, 'tahunan'])->name('laporan.tahunan');
+    Route::get('/laporan/tahunan/pdf', [LaporanController::class, 'tahunanPdf'])->name('laporan.tahunan.pdf');
+    Route::get('/laporan/custom', [LaporanController::class, 'custom'])->name('laporan.custom');
+    Route::get('/laporan/custom/pdf', [LaporanController::class, 'customPdf'])->name('laporan.custom.pdf');
 
 });
 
@@ -61,7 +60,7 @@ Route::middleware('auth')->group(function () {
         ->name('akun-pengguna.toggle-aktif');
 
 
-        Route::resource('keperluan', KeperluanController::class);
-        
+    Route::resource('keperluan', KeperluanController::class);
+
 });
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
