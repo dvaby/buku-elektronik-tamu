@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BukuTamu;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -23,11 +24,27 @@ class DashboardController extends Controller
             $tahunTersedia = collect([$tahunSekarang]);
         }
 
+        $feedbacks = Feedback::with('bukuTamu')->latest()->take(10)->get();
+
         return view('dashboard', [
             'tahunTersedia' => $tahunTersedia,
             'tahunSekarang' => $tahunSekarang,
             'bulanSekarang' => $bulanSekarang,
+            'feedbacks' => $feedbacks,
         ]);
+    }
+
+    public function updateFeedback(Request $request, Feedback $feedback)
+    {
+        $validated = $request->validate([
+            'rating' => 'nullable|integer|min:1|max:5',
+            'feedback' => 'nullable|string|max:1000',
+            'status' => 'nullable|in:baru,selesai,diproses',
+        ]);
+
+        $feedback->update($validated);
+
+        return redirect()->route('dashboard')->with('success', 'Feedback berhasil diperbarui.');
     }
 
     // Grafik: jumlah pengunjung per bulan dalam 1 tahun

@@ -71,6 +71,69 @@
 
         </div>
 
+        <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div class="bg-yellow-500 px-4 py-3 flex items-center justify-between">
+                <h3 class="font-semibold text-gray-900 text-sm">Feedback Terbaru</h3>
+                <span class="text-xs text-gray-700">{{ $feedbacks->count() }} entri</span>
+            </div>
+            <div class="p-4 space-y-4">
+                @forelse ($feedbacks as $feedback)
+                    <div class="border border-gray-200 rounded-lg p-4 bg-gray-50">
+                        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                            <div>
+                                <p class="font-semibold text-gray-900">{{ $feedback->bukuTamu->nama ?? 'Pengunjung' }}</p>
+                                <p class="text-sm text-gray-600">{{ $feedback->feedback ?: 'Tidak ada komentar.' }}</p>
+                            </div>
+                            <div class="text-sm text-gray-600">
+                                <div class="flex items-center gap-1">
+                                    @for ($i = 1; $i <= 5; $i++)
+                                        <span class="{{ $i <= ($feedback->rating ?? 0) ? 'text-yellow-500' : 'text-gray-300' }}">★</span>
+                                    @endfor
+                                </div>
+                                <p class="mt-1">Status: <span class="font-medium text-gray-800">{{ ucfirst($feedback->status ?? 'baru') }}</span></p>
+                            </div>
+                        </div>
+
+                        <form action="{{ route('dashboard.feedback.update', $feedback) }}" method="POST" class="mt-4 space-y-3">
+                            @csrf
+                            @method('PUT')
+                            <div class="grid md:grid-cols-3 gap-3">
+                                <label class="text-sm text-gray-700">
+                                    <span class="block mb-1">Rating</span>
+                                    <select name="rating" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <option value="{{ $i }}" {{ ($feedback->rating ?? 0) == $i ? 'selected' : '' }}>{{ $i }} Bintang</option>
+                                        @endfor
+                                    </select>
+                                </label>
+                                <label class="text-sm text-gray-700">
+                                    <span class="block mb-1">Status</span>
+                                    <select name="status" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">
+                                        @foreach (['baru', 'diproses', 'selesai'] as $status)
+                                            <option value="{{ $status }}" {{ ($feedback->status ?? 'baru') == $status ? 'selected' : '' }}>{{ ucfirst($status) }}</option>
+                                        @endforeach
+                                    </select>
+                                </label>
+                                <label class="text-sm text-gray-700 md:col-span-1">
+                                    <span class="block mb-1">Tanggal</span>
+                                    <input type="text" value="{{ optional($feedback->created_at)->format('d M Y') }}" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm bg-gray-100" disabled>
+                                </label>
+                            </div>
+                            <label class="block text-sm text-gray-700">
+                                <span class="block mb-1">Komentar</span>
+                                <textarea name="feedback" rows="3" class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">{{ old('feedback', $feedback->feedback) }}</textarea>
+                            </label>
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold px-4 py-2 rounded-lg">Simpan</button>
+                            </div>
+                        </form>
+                    </div>
+                @empty
+                    <p class="text-sm text-gray-600">Belum ada feedback.</p>
+                @endforelse
+            </div>
+        </div>
+
     </div>
 
     <script>

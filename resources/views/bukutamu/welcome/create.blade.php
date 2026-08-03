@@ -160,7 +160,7 @@
                 BUKU TAMU ELEKTRONIK
             </h1>
 
-            <form action="{{ route('bukutamu.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
+            <form action="{{ route('bukutamu.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4" id="bukuTamuForm">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -284,11 +284,52 @@
 
                 <button type="submit"
                     class="btn-enter w-full bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-bold text-lg px-4 py-4 rounded-lg transition"
-                    style="animation-delay:1s">
+                    style="animation-delay:1.05s">
                     Simpan
                 </button>
             </form>
 
+        </div>
+    </div>
+
+    @if (session('success'))
+        <script>
+            window.addEventListener('DOMContentLoaded', () => {
+                document.getElementById('successModal').classList.remove('hidden');
+                document.getElementById('successModal').classList.add('flex');
+            });
+        </script>
+    @endif
+
+    <div id="successModal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/60 px-4">
+        <div class="w-full max-w-md rounded-2xl border border-yellow-200 bg-white p-6 shadow-2xl">
+            <div class="flex items-center justify-center mb-4">
+                <div class="flex h-12 w-12 items-center justify-center rounded-full bg-yellow-100 text-yellow-600">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+            </div>
+            <h3 class="text-center text-xl font-bold text-gray-900">Terima kasih!</h3>
+            <p class="mt-2 text-center text-sm text-gray-600">Data buku tamu Anda berhasil tersimpan.</p>
+            <form action="{{ route('bukutamu.feedback.store') }}" method="POST" class="mt-4 space-y-3">
+                @csrf
+                <div class="flex items-center justify-center gap-2" id="feedbackStars">
+                    <button type="button" class="star-btn text-3xl text-gray-300 hover:text-yellow-500 transition" data-value="1">★</button>
+                    <button type="button" class="star-btn text-3xl text-gray-300 hover:text-yellow-500 transition" data-value="2">★</button>
+                    <button type="button" class="star-btn text-3xl text-gray-300 hover:text-yellow-500 transition" data-value="3">★</button>
+                    <button type="button" class="star-btn text-3xl text-gray-300 hover:text-yellow-500 transition" data-value="4">★</button>
+                    <button type="button" class="star-btn text-3xl text-gray-300 hover:text-yellow-500 transition" data-value="5">★</button>
+                </div>
+                <input type="hidden" name="feedback_rating" id="feedbackRating" value="">
+                <input type="hidden" name="latest_buku_tamu_id" value="{{ session('latest_buku_tamu_id') }}">
+                <textarea name="feedback_message" rows="3" placeholder="Berikan saran atau feedback singkat untuk kami..."
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500"></textarea>
+                <div class="mt-6 flex justify-center gap-3">
+                    <button type="submit" class="rounded-lg bg-yellow-500 px-4 py-2 font-semibold text-gray-900 hover:bg-yellow-600">Kirim Feedback</button>
+                    <button type="button" id="closeSuccessModal" class="rounded-lg border border-gray-300 px-4 py-2 font-semibold text-gray-700 hover:bg-gray-100">Lewati</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -416,6 +457,45 @@
                     kbBox.classList.add('kb-show');
                     adjustFormPosition(input);
                 });
+            });
+
+            const stars = document.querySelectorAll('.star-btn');
+            const ratingInput = document.getElementById('feedbackRating');
+            stars.forEach(star => {
+                star.addEventListener('click', () => {
+                    const value = parseInt(star.dataset.value, 10);
+                    ratingInput.value = value;
+                    stars.forEach((item, index) => {
+                        item.classList.toggle('text-yellow-500', index < value);
+                        item.classList.toggle('text-gray-300', index >= value);
+                    });
+                });
+            });
+
+            const form = document.getElementById('bukuTamuForm');
+            const successModal = document.getElementById('successModal');
+            const closeSuccessModal = document.getElementById('closeSuccessModal');
+
+            form.addEventListener('submit', function () {
+                const submitButton = form.querySelector('button[type="submit"]');
+                if (submitButton) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Menyimpan...';
+                }
+            });
+
+            if (closeSuccessModal) {
+                closeSuccessModal.addEventListener('click', () => {
+                    successModal.classList.add('hidden');
+                    successModal.classList.remove('flex');
+                });
+            }
+
+            successModal.addEventListener('click', (event) => {
+                if (event.target === successModal) {
+                    successModal.classList.add('hidden');
+                    successModal.classList.remove('flex');
+                }
             });
 
             document.addEventListener('pointerdown', e => {

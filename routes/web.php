@@ -20,6 +20,7 @@ Route::get('/welcome', function () {
 
 Route::get('/bukutamu', [BukuTamuController::class, 'create'])->name('bukutamu.create');
 Route::post('/bukutamu', [BukuTamuController::class, 'store'])->name('bukutamu.store');
+Route::post('/bukutamu/feedback', [BukuTamuController::class, 'storeFeedback'])->name('bukutamu.feedback.store');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/chart-bulan', [DashboardController::class, 'chartBulan'])->middleware('auth')->name('dashboard.chart-bulan');
     Route::get('/dashboard/chart-tanggal', [DashboardController::class, 'chartTanggal'])->middleware('auth')->name('dashboard.chart-tanggal');
     Route::get('/dashboard/chart-keperluan', [DashboardController::class, 'chartKeperluan'])->middleware('auth')->name('dashboard.chart-keperluan');
+    Route::put('/dashboard/feedback/{feedback}', [DashboardController::class, 'updateFeedback'])->middleware('auth')->name('dashboard.feedback.update');
     Route::get('/informasi-pengguna', [UserManagementController::class, 'informasi'])->name('akun-pengguna.informasi');
     Route::get('/pengunjung', [PengunjungController::class, 'index'])->name('pengunjung.index');
     Route::get('/laporan/harian', [LaporanController::class, 'harian'])->name('laporan.harian');
