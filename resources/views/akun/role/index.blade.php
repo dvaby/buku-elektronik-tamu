@@ -9,15 +9,35 @@
             <div class="bg-green-100 text-green-700 text-sm px-4 py-3 rounded-lg">{{ session('success') }}</div>
         @endif
 
-        <div class="flex justify-between items-center">
+        <div class="grid gap-4 md:grid-cols-3">
+            <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <p class="text-sm text-gray-500">Total Role</p>
+                <p class="mt-1 text-2xl font-semibold text-gray-900">{{ $permissions->total() }}</p>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <p class="text-sm text-gray-500">Grup Terkait</p>
+                <p class="mt-1 text-2xl font-semibold text-gray-900">{{ \App\Models\Group::count() }}</p>
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+                <p class="text-sm text-gray-500">Status</p>
+                <p class="mt-1 text-lg font-semibold text-gray-900">Terhubung ke grup pengguna</p>
+            </div>
+        </div>
+
+        <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
             <form method="GET" class="flex gap-2">
                 <input type="text" name="cari" value="{{ request('cari') }}" placeholder="Cari nama role..."
                        class="border border-gray-300 rounded-lg px-3 py-2 text-sm w-64 focus:outline-none focus:ring-2 focus:ring-yellow-500">
                 <button class="bg-gray-800 text-white text-sm px-4 py-2 rounded-lg">Cari</button>
             </form>
-            <a href="{{ route('role.create') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold text-sm px-4 py-2 rounded-lg">
-                + Tambah Role
-            </a>
+            <div class="flex gap-2">
+                <a href="{{ route('grup.index') }}" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
+                    Lihat Grup
+                </a>
+                <a href="{{ route('role.create') }}" class="bg-yellow-500 hover:bg-yellow-600 text-gray-900 font-semibold text-sm px-4 py-2 rounded-lg">
+                    + Tambah Role
+                </a>
+            </div>
         </div>
 
         <div class="bg-white rounded-xl border border-gray-200 overflow-x-auto">
@@ -27,6 +47,7 @@
                         <th class="px-4 py-3 w-16">No</th>
                         <th class="px-4 py-3">Privileges</th>
                         <th class="px-4 py-3">Deskripsi</th>
+                        <th class="px-4 py-3">Grup Terkait</th>
                         <th class="px-4 py-3 w-32">Aksi</th>
                     </tr>
                 </thead>
@@ -36,6 +57,7 @@
                             <td class="px-4 py-3 text-gray-500">{{ $permissions->firstItem() + $index }}</td>
                             <td class="px-4 py-3 font-medium text-gray-900">{{ $item->nama }}</td>
                             <td class="px-4 py-3 text-gray-600">{{ $item->deskripsi ?? '-' }}</td>
+                            <td class="px-4 py-3 text-gray-600">{{ \App\Models\Group::count() > 0 ? 'Menggunakan grup pengguna' : 'Belum ada grup' }}</td>
                             <td class="px-4 py-3 flex gap-2">
                                 <a href="{{ route('role.edit', $item->id) }}" class="text-blue-600 hover:underline text-xs font-medium">Edit</a>
                                 <form action="{{ route('role.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin hapus role ini?')">
@@ -45,7 +67,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="4" class="px-4 py-6 text-center text-gray-400">Belum ada data role.</td></tr>
+                        <tr><td colspan="5" class="px-4 py-6 text-center text-gray-400">Belum ada data role.</td></tr>
                     @endforelse
                 </tbody>
             </table>

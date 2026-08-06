@@ -6,7 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <title>{{ config('app.name', 'Buku Tamu') }}</title>
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/page-transition.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-gray-50 font-sans antialiased">
     <div class="flex min-h-screen">
@@ -34,6 +34,17 @@
                     Dashboard
                 </a>
 
+                @if (Auth::user()->hasPermission('Kelola Feedback') || Auth::user()->hasPermission('Lihat Feedback'))
+                    <a href="{{ route('dashboard.feedback.index') }}"
+                       class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition
+                              {{ request()->routeIs('dashboard.feedback.*') ? 'bg-yellow-500 text-gray-900' : 'text-gray-600 hover:bg-gray-100' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h8M8 14h5m-7 4h10a2 2 0 002-2V8a2 2 0 00-2-2H6a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Feedback
+                    </a>
+                @endif
+
                 <div x-data="{ open: {{ request()->routeIs('akun-pengguna.*') || request()->routeIs('grup.*') || request()->routeIs('role.*') ? 'true' : 'false' }} }">
 
     <button @click="open = !open"
@@ -55,16 +66,27 @@
                   {{ request()->routeIs('akun-pengguna.index') || request()->routeIs('akun-pengguna.create') || request()->routeIs('akun-pengguna.edit') ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-800' }}">
             Akun Pengguna
         </a>
-        <a href="{{ route('grup.index') }}"
-           class="block px-3 py-2 rounded-lg text-sm transition
-                  {{ request()->routeIs('grup.*') ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-800' }}">
-            Grup Pengguna
-        </a>
-        <a href="{{ route('role.index') }}"
-           class="block px-3 py-2 rounded-lg text-sm transition
-                  {{ request()->routeIs('role.*') ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-800' }}">
-            Role Pengguna
-        </a>
+        @if (Auth::user()->hasPermission('Kelola Grup'))
+            <a href="{{ route('grup.index') }}"
+               class="block px-3 py-2 rounded-lg text-sm transition
+                      {{ request()->routeIs('grup.*') ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-800' }}">
+                Grup Pengguna
+            </a>
+        @endif
+        @if (Auth::user()->hasPermission('Kelola Privileges'))
+            <a href="{{ route('role.index') }}"
+               class="block px-3 py-2 rounded-lg text-sm transition
+                      {{ request()->routeIs('role.*') ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-800' }}">
+                Role Pengguna
+            </a>
+        @endif
+        @if (Auth::user()->hasPermission('Kelola Akun'))
+            <a href="{{ route('akun-pengguna.index') }}"
+               class="block px-3 py-2 rounded-lg text-sm transition
+                      {{ request()->routeIs('akun-pengguna.index') || request()->routeIs('akun-pengguna.create') || request()->routeIs('akun-pengguna.edit') ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-800' }}">
+                Akun Pengguna
+            </a>
+        @endif
         <a href="{{ route('akun-pengguna.informasi') }}"
            class="block px-3 py-2 rounded-lg text-sm transition
                   {{ request()->routeIs('akun-pengguna.informasi') ? 'text-yellow-600 font-semibold' : 'text-gray-500 hover:text-gray-800' }}">

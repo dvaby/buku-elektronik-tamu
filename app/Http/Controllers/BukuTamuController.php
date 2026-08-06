@@ -32,6 +32,18 @@ class BukuTamuController extends Controller
 
         $bukuTamu = BukuTamu::create($validated);
 
+        $feedbackRating = $request->input('feedback_rating');
+        $feedbackMessage = $request->input('feedback_message');
+
+        if ($feedbackRating || $feedbackMessage) {
+            Feedback::create([
+                'buku_tamu_id' => $bukuTamu->id,
+                'rating' => $feedbackRating ? (int) $feedbackRating : null,
+                'feedback' => $feedbackMessage,
+                'status' => 'baru',
+            ]);
+        }
+
         return redirect()->route('bukutamu.create')
             ->with('success', 'Terima kasih, data berhasil disimpan!')
             ->with('latest_buku_tamu_id', $bukuTamu->id);

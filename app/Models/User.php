@@ -13,6 +13,30 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    public function hasPermission(string $permissionName): bool
+    {
+        if ($this->group?->akses_penuh) {
+            return true;
+        }
+
+        return $this->group?->permissions()->where('nama', $permissionName)->exists() ?? false;
+    }
+
+    public function hasPermissionForAny(array $permissionNames): bool
+    {
+        if ($this->group?->akses_penuh) {
+            return true;
+        }
+
+        foreach ($permissionNames as $permissionName) {
+            if ($this->hasPermission($permissionName)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * The attributes that are mass assignable.
      *

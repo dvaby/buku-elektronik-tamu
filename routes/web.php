@@ -30,11 +30,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('role', PermissionController::class)->parameters(['role' => 'role']);
+    Route::resource('role', PermissionController::class)->parameters(['role' => 'role'])->middleware('permission:Kelola Privileges');
 
     Route::get('/dashboard/chart-bulan', [DashboardController::class, 'chartBulan'])->middleware('auth')->name('dashboard.chart-bulan');
     Route::get('/dashboard/chart-tanggal', [DashboardController::class, 'chartTanggal'])->middleware('auth')->name('dashboard.chart-tanggal');
     Route::get('/dashboard/chart-keperluan', [DashboardController::class, 'chartKeperluan'])->middleware('auth')->name('dashboard.chart-keperluan');
+    Route::get('/dashboard/feedback', [DashboardController::class, 'feedbackIndex'])->middleware('auth')->name('dashboard.feedback.index');
     Route::put('/dashboard/feedback/{feedback}', [DashboardController::class, 'updateFeedback'])->middleware('auth')->name('dashboard.feedback.update');
     Route::delete('/dashboard/feedback/{feedback}', [DashboardController::class, 'destroyFeedback'])->middleware('auth')->name('dashboard.feedback.destroy');
     Route::get('/informasi-pengguna', [UserManagementController::class, 'informasi'])->name('akun-pengguna.informasi');
@@ -57,13 +58,16 @@ Route::middleware('auth')->group(function () {
     // ... route profile yang udah ada
 
     Route::resource('grup', GroupController::class)
-        ->parameters(['grup' => 'grup']);
+        ->parameters(['grup' => 'grup'])
+        ->middleware('permission:Kelola Grup');
 
     Route::resource('akun-pengguna', UserManagementController::class)
-        ->parameters(['akun-pengguna' => 'akun_pengguna']);
+        ->parameters(['akun-pengguna' => 'akun_pengguna'])
+        ->middleware('permission:Kelola Akun');
 
     Route::post('/akun-pengguna/{akun_pengguna}/toggle-aktif', [UserManagementController::class, 'toggleAktif'])
-        ->name('akun-pengguna.toggle-aktif');
+        ->name('akun-pengguna.toggle-aktif')
+        ->middleware('permission:Kelola Akun');
 
 
     Route::resource('keperluan', KeperluanController::class);

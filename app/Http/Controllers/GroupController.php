@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -20,7 +21,9 @@ class GroupController extends Controller
 
     public function create()
     {
-        return view('akun.grup.create');
+        $permissions = Permission::orderBy('nama')->get();
+
+        return view('akun.grup.create', compact('permissions'));
     }
 
     public function store(Request $request)
@@ -29,16 +32,21 @@ class GroupController extends Controller
             'nama' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'akses_penuh' => 'boolean',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
         ]);
 
-        Group::create($validated);
+        $group = Group::create($validated);
+        $group->permissions()->sync($request->input('permissions', []));
 
         return redirect()->route('grup.index')->with('success', 'Grup berhasil ditambahkan.');
     }
 
     public function edit(Group $grup)
     {
-        return view('akun.grup.edit', ['group' => $grup]);
+        $permissions = Permission::orderBy('nama')->get();
+
+        return view('akun.grup.edit', ['group' => $grup, 'permissions' => $permissions]);
     }
 
     public function update(Request $request, Group $grup)
@@ -47,9 +55,12 @@ class GroupController extends Controller
             'nama' => 'required|string|max:255',
             'deskripsi' => 'nullable|string',
             'akses_penuh' => 'boolean',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'exists:permissions,id',
         ]);
 
         $grup->update($validated);
+        $grup->permissions()->sync($request->input('permissions', []));
 
         return redirect()->route('grup.index')->with('success', 'Grup berhasil diperbarui.');
     }

@@ -6,6 +6,7 @@ use App\Models\BukuTamu;
 use App\Models\Feedback;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class FeedbackTest extends TestCase
@@ -67,5 +68,58 @@ class FeedbackTest extends TestCase
             'feedback' => 'Sudah lebih baik',
             'status' => 'selesai',
         ]);
+    }
+
+    public function test_dashboard_preview_shows_only_three_latest_feedbacks(): void
+    {
+        $user = User::factory()->create();
+        $bukuTamu = BukuTamu::create([
+            'identitas' => '222',
+            'instansi_alamat' => 'Dinas Arsip',
+            'keperluan' => 'Kunjungan',
+            'nama' => 'Budi',
+            'jenis_kelamin' => 'Laki-laki',
+            'anda_sendirian' => 'Hanya saya',
+            'usia' => 30,
+        ]);
+
+        Feedback::create([
+            'buku_tamu_id' => $bukuTamu->id,
+            'rating' => 1,
+            'feedback' => 'Feedback 1',
+            'status' => 'baru',
+            'created_at' => Carbon::now()->subDays(4),
+            'updated_at' => Carbon::now()->subDays(4),
+        ]);
+        Feedback::create([
+            'buku_tamu_id' => $bukuTamu->id,
+            'rating' => 2,
+            'feedback' => 'Feedback 2',
+            'status' => 'baru',
+            'created_at' => Carbon::now()->subDays(3),
+            'updated_at' => Carbon::now()->subDays(3),
+        ]);
+        Feedback::create([
+            'buku_tamu_id' => $bukuTamu->id,
+            'rating' => 3,
+            'feedback' => 'Feedback 3',
+            'status' => 'baru',
+            'created_at' => Carbon::now()->subDays(2),
+            'updated_at' => Carbon::now()->subDays(2),
+        ]);
+        Feedback::create([
+            'buku_tamu_id' => $bukuTamu->id,
+            'rating' => 5,
+            'feedback' => 'Feedback 4',
+            'status' => 'selesai',
+            'created_at' => Carbon::now()->subDay(),
+            'updated_at' => Carbon::now()->subDay(),
+        ]);
+
+        $response = $this->actingAs($user)->get(route('dashboard'));
+
+        $response->assertOk();
+        $response->assertSee('Feedback Terbaru');
+        $response->assertSee('Lihat semua feedback');
     }
 }

@@ -21,6 +21,21 @@
                               class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-500">{{ old('deskripsi') }}</textarea>
                 </div>
 
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">Privileges</label>
+                    <div class="rounded-lg border border-gray-200 bg-gray-50 p-3 space-y-2">
+                        @foreach ($permissions as $permission)
+                            <label class="flex items-center gap-2 text-sm text-gray-700">
+                                <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" class="accent-yellow-500">
+                                <span class="font-medium">{{ $permission->nama }}</span>
+                                @if ($permission->deskripsi)
+                                    <span class="text-gray-500">- {{ $permission->deskripsi }}</span>
+                                @endif
+                            </label>
+                        @endforeach
+                    </div>
+                </div>
+
                 <label class="flex items-center gap-2 text-sm text-gray-700">
                     <input type="checkbox" name="akses_penuh" value="1" class="accent-yellow-500">
                     Akses Penuh (Master Admin)

@@ -24,12 +24,21 @@ class DashboardController extends Controller
             $tahunTersedia = collect([$tahunSekarang]);
         }
 
-        $feedbacks = Feedback::with('bukuTamu')->latest()->take(10)->get();
+        $feedbacks = Feedback::with('bukuTamu')->latest()->take(3)->get();
 
         return view('dashboard', [
             'tahunTersedia' => $tahunTersedia,
             'tahunSekarang' => $tahunSekarang,
             'bulanSekarang' => $bulanSekarang,
+            'feedbacks' => $feedbacks,
+        ]);
+    }
+
+    public function feedbackIndex()
+    {
+        $feedbacks = Feedback::with('bukuTamu')->latest()->get();
+
+        return view('feedback.index', [
             'feedbacks' => $feedbacks,
         ]);
     }
